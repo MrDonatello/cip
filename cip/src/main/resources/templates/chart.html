@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script src="https://d26b395fwzu5fz.cloudfront.net/3.4.0/keen.min.js"></script>
+
+</head>
+<body>
+<div class="chartWrapper">
+    <div class="chartAreaWrapper">
+        <canvas id="chart" height="400" width="15000"></canvas>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var client = new Keen({
+        projectId: "53eab6e12481962467000000",
+        readKey: "d1b97982ce67ad4b411af30e53dd75be6cf610213c35f3bd3dd2ef62eaeac14632164890413e2cc2df2e489da88e87430af43628b0c9e0b2870d0a70580d5f5fe8d9ba2a6d56f9448a3b6f62a5e6cdd1be435c227253fbe3fab27beb0d14f91b710d9a6e657ecf47775281abc17ec455"
+    });
+
+    Keen.ready(function(){
+        var el = document.getElementById("chart");
+        var query = new Keen.Query("count", {
+            eventCollection: "activations",
+            groupBy: "device_model_name",
+            timeframe: {
+                start: "2013-12-01T00:00:00.000-00:00",
+                end: "2014-02-01T00:00:00.000-00:00"
+            },
+            interval: "daily"
+        });
+        client.draw(query, el, {
+            library: "chartjs",
+            chartType: "bar"
+        });
+    });
+    /*]]>*/
+</script>
+</body>
+</html>
