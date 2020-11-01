@@ -1,41 +1,50 @@
 package com.cip.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String firstName;
     private String lastName;
     private String patronymic;
+
+    @Column(unique = true)
     private String login;
+
     private String password;
-    private Role role;
+    private boolean active;
 
-    public User() {
-    }
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> role;
 
-    public User(String firstName, String lastName, String patronymic, String login, String password, int id, Role role) {
+
+    public User(String firstName, String lastName, String patronymic, String login, String password, boolean active, Set<Role> role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
         this.login = login;
         this.password = password;
-        this.id = id;
+        this.active = active;
         this.role = role;
     }
 
-    public int getId() {
+
+    public User() {
+
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -79,11 +88,19 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Set<Role> getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Set<Role> role) {
         this.role = role;
     }
 }

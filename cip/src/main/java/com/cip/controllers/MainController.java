@@ -2,11 +2,12 @@ package com.cip.controllers;
 
 import com.cip.model.User;
 import com.cip.repo.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,10 +23,19 @@ public class MainController {
 
 
     @GetMapping("/")
-    public String home(Model model) {
-       Iterable<User> users = userRepository.findAll();
+    public String hom(Model model) {
+        Iterable<User> users = userRepository.findAll();
+        return "login";
+    }
 
-        return "engineer";
+    @GetMapping("/success")
+    public String loginPageRedirect(Authentication authentication) {
+        String role = authentication.getAuthorities().toString();
+        if (role.contains("ROLE_ADMIN")) {
+            return "engineer";
+        } else {
+            return "operator";
+        }
     }
 
     /*@PostMapping("/")
@@ -40,14 +50,14 @@ public class MainController {
     }*/
 
     @GetMapping("/engineer")
-    public String test(Model model ) {
-       /*Iterable<User> users = userRepository.findAll();*/
+    public String test(Model model) {
+        /*Iterable<User> users = userRepository.findAll();*/
         return "engineer";
     }
 
     @PostMapping("/engineer")
-    public String hom( ) {
-       /*Iterable<User> users = userRepository.findAll();*/
+    public String hom() {
+        /*Iterable<User> users = userRepository.findAll();*/
         return "engineer";
     }
 
