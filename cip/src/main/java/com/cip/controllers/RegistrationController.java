@@ -2,8 +2,9 @@ package com.cip.controllers;
 
 import com.cip.model.Role;
 import com.cip.model.User;
-import com.cip.repo.UserRepository;
+import com.cip.dao.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +16,10 @@ import java.util.Map;
 @Controller
 public class RegistrationController {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private  UserRepository userRepository;
 
-    public RegistrationController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+
 
 
     @GetMapping("/registration")
@@ -37,11 +37,11 @@ public class RegistrationController {
         }
         user.setActive(true);
         if (roleForSet.equals("Инженер")) {
-            user.setRole(Collections.singleton(Role.ENGINEER));
+            user.setRoles(Collections.singleton(Role.ENGINEER));
         } else {
-            user.setRole(Collections.singleton(Role.OPERATOR));
+            user.setRoles(Collections.singleton(Role.OPERATOR));
         }
         userRepository.save(user);
-        return "redirect: engineer";
+        return "engineer";
     }
 }

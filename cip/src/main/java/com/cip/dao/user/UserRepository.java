@@ -1,4 +1,4 @@
-package com.cip.repo;
+package com.cip.dao.user;
 
 import com.cip.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

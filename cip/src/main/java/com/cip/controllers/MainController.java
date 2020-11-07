@@ -1,8 +1,6 @@
 package com.cip.controllers;
 
-import com.cip.model.User;
-import com.cip.repo.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cip.dao.user.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,15 +21,14 @@ public class MainController {
 
 
     @GetMapping("/")
-    public String hom(Model model) {
-        Iterable<User> users = userRepository.findAll();
+    public String login() {
         return "login";
     }
 
     @GetMapping("/success")
     public String loginPageRedirect(Authentication authentication) {
         String role = authentication.getAuthorities().toString();
-        if (role.contains("ROLE_ADMIN")) {
+        if (role.contains("ENGINEER")) {
             return "engineer";
         } else {
             return "operator";

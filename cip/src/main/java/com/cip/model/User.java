@@ -22,17 +22,17 @@ public class User {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> role;
+    private Set<Role> roles;
 
 
-    public User(String firstName, String lastName, String patronymic, String login, String password, boolean active, Set<Role> role) {
+    public User(String firstName, String lastName, String patronymic, String login, String password, boolean active, Set<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
         this.login = login;
         this.password = password;
         this.active = active;
-        this.role = role;
+        this.roles = roles;
     }
 
 
@@ -96,11 +96,11 @@ public class User {
         this.active = active;
     }
 
-    public Set<Role> getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Set<Role> role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
