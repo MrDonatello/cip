@@ -1,6 +1,6 @@
 package com.cip.model;
 
-import javax.persistence.Entity;
+import com.cip.model.user.User;
 
 /*@Entity*/
 public class Engineer extends User {

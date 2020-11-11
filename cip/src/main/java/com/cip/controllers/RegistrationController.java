@@ -1,10 +1,8 @@
 package com.cip.controllers;
 
-import com.cip.model.Role;
-import com.cip.model.User;
 import com.cip.dao.user.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.cip.model.Role;
+import com.cip.model.user.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +14,11 @@ import java.util.Map;
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    private  UserRepository userRepository;
+    private final UserRepository userRepository;
 
-
+    public RegistrationController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
 
     @GetMapping("/registration")

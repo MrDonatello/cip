@@ -1,4 +1,6 @@
-package com.cip.model;
+package com.cip.model.user;
+
+import com.cip.model.Role;
 
 import javax.persistence.*;
 import java.util.Set;

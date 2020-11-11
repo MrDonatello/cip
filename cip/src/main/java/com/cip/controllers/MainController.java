@@ -1,6 +1,12 @@
 package com.cip.controllers;
 
+import com.cip.dao.cip.Cip2Repository;
+import com.cip.dao.cip.CipRepository;
 import com.cip.dao.user.UserRepository;
+import com.cip.model.cip.Cip;
+import com.cip.model.cip.Cip1;
+import com.cip.model.cip.Cip2;
+import com.cip.model.user.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,20 +14,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class MainController {
 
     private final UserRepository userRepository;
+    private final CipRepository cipRepository;
+    private final Cip2Repository cip2Repository;
 
-    public MainController(UserRepository userRepository) {
+    public MainController(UserRepository userRepository, CipRepository cipRepository, Cip2Repository cip2Repository) {
         this.userRepository = userRepository;
+        this.cipRepository = cipRepository;
+        this.cip2Repository = cip2Repository;
     }
 
 
     @GetMapping("/")
     public String login() {
+        List<Cip1> cip1 = cipRepository.findAll();
+        List<Cip2> cip2 = cip2Repository.findAll();
+
         return "login";
     }
 
@@ -53,8 +67,9 @@ public class MainController {
     }
 
     @PostMapping("/engineer")
-    public String hom() {
-        /*Iterable<User> users = userRepository.findAll();*/
+    public String hom(Cip cip1) {
+
+        Iterable<User> users = userRepository.findAll();
         return "engineer";
     }
 
