@@ -1,13 +1,10 @@
 package com.cip.controllers;
 
-import com.cip.dao.cip.Cip2Repository;
-import com.cip.dao.cip.CipRepository;
+import com.cip.dao.cip.*;
 import com.cip.dao.user.UserRepository;
-import com.cip.model.cip.Cip;
-import com.cip.model.cip.Cip1;
-import com.cip.model.cip.Cip2;
+import com.cip.model.cip.*;
 import com.cip.model.user.User;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,28 +18,43 @@ import java.util.Map;
 public class MainController {
 
     private final UserRepository userRepository;
-    private final CipRepository cipRepository;
+    private final Cip1Repository cip1Repository;
     private final Cip2Repository cip2Repository;
+    private final Cip3Repository cip3Repository;
+    private final Cip4Repository cip4Repository;
+    private final CommonRepository commonRepository;
+    private final WarningRepository warningRepository;
 
-    public MainController(UserRepository userRepository, CipRepository cipRepository, Cip2Repository cip2Repository) {
+    public MainController(UserRepository userRepository, Cip1Repository cip1Repository, Cip2Repository cip2Repository, Cip3Repository cip3Repository, Cip4Repository cip4Repository, CommonRepository commonRepository, WarningRepository warningRepository) {
         this.userRepository = userRepository;
-        this.cipRepository = cipRepository;
+        this.cip1Repository = cip1Repository;
         this.cip2Repository = cip2Repository;
+        this.cip3Repository = cip3Repository;
+        this.cip4Repository = cip4Repository;
+        this.commonRepository = commonRepository;
+        this.warningRepository = warningRepository;
     }
 
 
     @GetMapping("/")
     public String login() {
-        List<Cip1> cip1 = cipRepository.findAll();
+        List<Cip1> cip1 = cip1Repository.findAll();
         List<Cip2> cip2 = cip2Repository.findAll();
-
+        List<Cip3> cip3 = cip3Repository.findAll();
+        List<Cip4> cip4 = cip4Repository.findAll();
+        List<Common> commons = commonRepository.findAll();
+        List<Warning> warnings = warningRepository.findAll();
         return "login";
     }
 
+    @GetMapping("/login")
+    public String login2() {
+        return "login"; // redirect ???
+    }
+
     @GetMapping("/success")
-    public String loginPageRedirect(Authentication authentication) {
-        String role = authentication.getAuthorities().toString();
-        if (role.contains("ENGINEER")) {
+    public String loginPageRedirect(@AuthenticationPrincipal User user) {
+        if (user.getRoles().toString().contains("ENGINEER")) {
             return "engineer";
         } else {
             return "operator";
@@ -73,6 +85,11 @@ public class MainController {
         return "engineer";
     }
 
+  /*  @PostMapping("/logout")
+    public String logout() {
+        return "login";
+    }
+*/
 
 
     /*@GetMapping("/greeting")

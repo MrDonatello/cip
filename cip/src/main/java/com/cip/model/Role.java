@@ -1,6 +1,13 @@
 package com.cip.model;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
     ENGINEER,
     OPERATOR;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }
