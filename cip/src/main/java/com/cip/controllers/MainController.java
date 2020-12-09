@@ -36,7 +36,7 @@ public class MainController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String login() {
         List<Cip1> cip1 = cip1Repository.findAll();
         List<Cip2> cip2 = cip2Repository.findAll();
@@ -45,11 +45,6 @@ public class MainController {
         List<Common> commons = commonRepository.findAll();
         List<Warning> warnings = warningRepository.findAll();
         return "login";
-    }
-
-    @GetMapping("/login")
-    public String login2() {
-        return "login"; // redirect ???
     }
 
     @GetMapping("/success")
@@ -85,11 +80,10 @@ public class MainController {
         return "engineer";
     }
 
-  /*  @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout() {
         return "login";
     }
-*/
 
 
     /*@GetMapping("/greeting")

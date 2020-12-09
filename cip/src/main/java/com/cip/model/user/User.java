@@ -37,7 +37,7 @@ public class User implements UserDetails {
     }
 
 
-    public User() {
+    protected User() {
 
     }
 
