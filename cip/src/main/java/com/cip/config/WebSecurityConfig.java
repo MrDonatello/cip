@@ -1,9 +1,9 @@
 package com.cip.config;
 
 import com.cip.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,17 +16,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
-    @Autowired
-    public   PasswordEncoder passwordEncoder;
+    public final PasswordEncoder passwordEncoder;
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
 
-    public WebSecurityConfig(UserService userService) {
+    public WebSecurityConfig(UserService userService, @Lazy PasswordEncoder passwordEncoder) {
         this.userService = userService;
 
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override

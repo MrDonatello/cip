@@ -103,4 +103,15 @@ public class MainController {
         model.addAttribute("data", data);
         return "greeting";
     }
+
+    @GetMapping("/washing")
+    public String registrationOfWashes(Model model) {
+        Map<String, Integer> data = new LinkedHashMap<String, Integer>();
+        data.put("JAVA", 50);
+        data.put("Ruby", 20);
+        data.put("Python", 30);
+
+        model.addAttribute("data", data);
+        return "washing";
+    }
 }
