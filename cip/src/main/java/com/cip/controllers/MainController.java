@@ -106,10 +106,13 @@ public class MainController {
 
     @GetMapping("/washing")
     public String registrationOfWashes(Model model) {
-        Map<String, Integer> data = new LinkedHashMap<String, Integer>();
-        data.put("JAVA", 50);
-        data.put("Ruby", 20);
-        data.put("Python", 30);
+        Map<Integer, String[]> data = new LinkedHashMap<Integer, String[]>();
+
+        String[] s = {"CIP1" ,"Щелочь", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
+        String[] s2 = {"CIP1" ,"Ополаскивание", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
+        data.put(1, s);
+        data.put(2, s2);
+
 
         model.addAttribute("data", data);
         return "washing";

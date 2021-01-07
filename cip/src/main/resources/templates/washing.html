@@ -8,8 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.5/examples/dashboard/dashboard.css" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">-->
     <link th:href="@{/css/registration.css}" rel="stylesheet">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>-->
     <title>Washing Page</title>
 </head>
 <body>
@@ -36,9 +39,12 @@
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link" href="/engineer">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
-                                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"></path>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                <path fill-rule="evenodd"
+                                      d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"></path>
                             </svg>
                             Назад <span class="sr-only"></span>
                         </a>
@@ -179,17 +185,17 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-           <!-- <div class="chartjs-size-monitor"
-                 style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                <div class="chartjs-size-monitor-expand"
-                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                </div>
-                <div class="chartjs-size-monitor-shrink"
-                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                </div>
-            </div>-->
+            <!-- <div class="chartjs-size-monitor"
+                  style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                 <div class="chartjs-size-monitor-expand"
+                      style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                     <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                 </div>
+                 <div class="chartjs-size-monitor-shrink"
+                      style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                     <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                 </div>
+             </div>-->
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Журнал мойки оборудования</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
@@ -212,46 +218,103 @@
             </div>
 
 
-            <div id="timeline" style="height: 700px; ">
+            <div class="tl" id="timeline" style="height: 400px; ">
+
                 <script th:inline="javascript">
-                    google.charts.load('current', {'packages':['timeline']});
+
+                    google.charts.load('current', {'packages': ['timeline']});
                     google.charts.setOnLoadCallback(drawChart);
+
+                    var chart, dataTable;
+
                     function drawChart() {
                         var container = document.getElementById('timeline');
-                        var chart = new google.visualization.Timeline(container);
-                        var dataTable = new google.visualization.DataTable();
-
-                        dataTable.addColumn({ type: 'string', id: ' Cip' });
-                        dataTable.addColumn({ type: 'string', id: 'Object' });
-                        dataTable.addColumn({ type: 'string', id: 'style', role: 'style' });
-                        dataTable.addColumn({ type: 'date', id: 'Start' });
-                        dataTable.addColumn({ type: 'date', id: 'End' });
-                        dataTable.addRows([
-                            ['CIP1', 'Щелочь', null, new Date(2020, 5, 5, 5, 5, 5), new Date(2020, 5, 5, 5, 10, 5) ],
-                            ['CIP1', 'Ополаскивание',null, new Date(2020, 5, 5, 5, 10, 35), new Date(2020, 5, 5, 5, 20, 5) ],
-                            ['CIP1', 'слив щелочи',null, new Date(2020, 5, 5, 5, 10, 5), new Date(2020, 5, 5, 5, 10, 35) ],
-                            ['CIP1', 'Танк32', '#cbb69d', new Date(2020, 5, 5, 5, 5, 5), new Date(2020, 5, 5, 5, 20, 5) ],
+                        chart = new google.visualization.Timeline(container);
+                        dataTable = new google.visualization.DataTable();
 
 
-                            ['CIP1', 'Щелочь', null, new Date(2020, 5, 5, 5, 21, 5 ),  new Date(2020, 5, 5, 5, 25, 5) ],
 
 
-                            ['CIP2', 'Щелочь', null,new Date(2020, 5, 5, 5, 10, 10),  new Date(2020, 5,5, 5,15,20) ],
-                            ['CIP2', 'Ополаскивание', null, new Date(2020, 5, 5, 5, 15, 20),  new Date(2020, 5,5, 5,20,20) ],
-                            ['CIP2', 'Л.П 21-30', '#obb695', new Date(2020, 5, 5, 5, 10, 10),  new Date(2020, 5,5, 5,20,20) ]
+                        let htmlData = [[${data}]];
 
-                        ]);
 
-                        chart.draw(dataTable);
+                        dataTable.addColumn({type: 'string', id: ' Cip'});
+                        dataTable.addColumn({type: 'string', id: 'Object'});
+                        dataTable.addColumn({type: 'string', id: 'style', role: 'style'});
+                        dataTable.addColumn({type: 'date', id: 'Start'});
+                        dataTable.addColumn({type: 'date', id: 'End'});
+
+                        var el;
+                           for (let subArr of Object.keys(htmlData)) {
+                                el = htmlData[subArr];
+
+                                   dataTable.addRows([[el[0], el[1], el[2],
+                                       new Date( el[3], el[4], el[5], el[6], el[7], el[8]), new Date(el[9],el[10],el[11],el[12],el[13],el[14])]
+                                   ]);
+
+
+
+
+                               /* dataTable.addRows([
+                                    [htmlData[1][0], htmlData[1][1], htmlData[1][2],
+                                        new Date(Number(htmlData[1][3]),
+                                            Number(htmlData[1][4]),
+                                            Number(htmlData[1][5]),
+                                            Number(htmlData[1][6]),
+                                            Number(htmlData[1][7]),
+                                            Number(htmlData[1][8])),
+                                        new Date(Number(htmlData[1][9]),
+                                            Number(htmlData[1][10]),
+                                            Number(htmlData[1][11]),
+                                            Number(htmlData[1][12]),
+                                            Number(htmlData[1][13]),
+                                            Number(htmlData[1][14]))]
+                                ]);*/
+
+                           }
+
+
+
+
+                            /*    ['CIP1', 'Ополаскивание', null, new Date(2020, 5, 5, 5, 10, 35), new Date(2020, 5, 5, 5, 20, 5)],
+                              ['CIP1', 'слив щелочи', null, new Date(2020, 5, 5, 5, 10, 5), new Date(2020, 5, 5, 5, 10, 35)],
+                              ['CIP1', 'Танк32', '#cbb69d', new Date(2020, 5, 5, 5, 5, 5), new Date(2020, 5, 5, 5, 20, 5)],
+
+
+                              ['CIP1', 'Щелочь', null, new Date(2020, 5, 5, 23, 21, 5), new Date(2020, 5, 5, 23, 25, 5)],
+
+
+                              ['CIP2', 'Щелочь', null, new Date(2020, 5, 5, 5, 10, 10), new Date(2020, 5, 5, 5, 15, 20)],
+                              ['CIP2', 'Ополаскивание', null, new Date(2020, 5, 5, 5, 15, 20), new Date(2020, 5, 5, 5, 20, 20)],
+                              ['CIP2', 'Л.П 21-30', '#obb695', new Date(2020, 5, 5, 5, 10, 10), new Date(2020, 5, 5, 5, 20, 20)]*/
+
+
+
+                        var options = {
+                            width: 33000,//каждый день ЗАДАННЫЙ В ФИЛЬТРЕ  умножить 33 000  2
+                            hAxis: {
+
+                                format: '   dd.MM.yy H:mm',
+                                gridlines: {count: 15}
+                            }
+                        };
+
+                        chart.draw(dataTable, options);
+                        google.visualization.events.addListener(chart, 'select', selectHandler);
                     }
 
+                    function selectHandler() {
+                        var selection = chart.getSelection();
+                        if (dataTable.getValue(selection[0].row, 2) != null) {//3 запрос и передача во второй блок данных (с перерисовкой)
+                            alert(dataTable.getValue(selection[0].row, 0));
+                        }
+                    }
 
                 </script>
-
             </div>
 
-           <!-- <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="1538" height="649"
-                    style="display: block; width: 1538px; height: 649px;"></canvas>-->
+            <!-- <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="1538" height="649"
+                     style="display: block; width: 1538px; height: 649px;"></canvas>-->
 
             <h2>ВТОРОЙ БЛОК</h2>
             <div class="table-responsive">
@@ -384,5 +447,6 @@
         </main>
     </div>
 </div>
+
 </body>
 </html>
