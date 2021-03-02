@@ -4,6 +4,7 @@ import com.cip.dao.cip.*;
 import com.cip.dao.user.UserRepository;
 import com.cip.model.cip.*;
 import com.cip.model.user.User;
+import com.cip.service.CipService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +25,9 @@ public class MainController {
     private final Cip4Repository cip4Repository;
     private final CommonRepository commonRepository;
     private final WarningRepository warningRepository;
+    private final CipService cipService;
 
-    public MainController(UserRepository userRepository, Cip1Repository cip1Repository, Cip2Repository cip2Repository, Cip3Repository cip3Repository, Cip4Repository cip4Repository, CommonRepository commonRepository, WarningRepository warningRepository) {
+    public MainController(UserRepository userRepository, Cip1Repository cip1Repository, Cip2Repository cip2Repository, Cip3Repository cip3Repository, Cip4Repository cip4Repository, CommonRepository commonRepository, WarningRepository warningRepository, CipService cipService) {
         this.userRepository = userRepository;
         this.cip1Repository = cip1Repository;
         this.cip2Repository = cip2Repository;
@@ -33,6 +35,7 @@ public class MainController {
         this.cip4Repository = cip4Repository;
         this.commonRepository = commonRepository;
         this.warningRepository = warningRepository;
+        this.cipService = cipService;
     }
 
 
@@ -107,11 +110,16 @@ public class MainController {
     @GetMapping("/washing")
     public String registrationOfWashes(Model model) {
         Map<Integer, String[]> data = new LinkedHashMap<Integer, String[]>();
+        Map map = cipService.readConfigureFile();
 
         String[] s = {"CIP1" ,"Щелочь", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
         String[] s2 = {"CIP1" ,"Ополаскивание", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
+        String[] s3 = {"CIP1" ,"Кислота", "null", "2020", "5", "5", "5", "10", "55", "2020", "5", "5", "5", "15", "55"};
+        String[] s4 = {"CIP1" ,"Ополаскивание", "null", "2020", "5", "5", "5", "15", "5", "2020", "5", "5", "5", "25", "5"};
         data.put(1, s);
         data.put(2, s2);
+        data.put(3, s3);
+        data.put(4, s4);
 
 
         model.addAttribute("data", data);
