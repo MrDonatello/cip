@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,18 +109,39 @@ public class MainController {
     }
 
     @GetMapping("/washing")
-    public String registrationOfWashes(Model model) {
-        Map<Integer, String[]> data = new LinkedHashMap<Integer, String[]>();
-        Map map = cipService.readConfigureFile();
+    public String registrationOfWashes(Model model) throws ParseException {
+        Map<Integer, String[]> data = new LinkedHashMap<>();
 
-        String[] s = {"CIP1" ,"Щелочь", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
-        String[] s2 = {"CIP1" ,"Ополаскивание", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
-        String[] s3 = {"CIP1" ,"Кислота", "null", "2020", "5", "5", "5", "10", "55", "2020", "5", "5", "5", "15", "55"};
-        String[] s4 = {"CIP1" ,"Ополаскивание", "null", "2020", "5", "5", "5", "15", "5", "2020", "5", "5", "5", "25", "5"};
+        Map <Integer, List<Integer>> referenceValues = cipService.readConfigureFile();//эталонные данные
+
+      /*  long id = 1;
+        id = cipService.TestDataBaseCip(id, 1, 1, 1, 1, 0, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 1, 1, 1, 0, 2, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 1, 1, 1, 0, 5, (int) (1 + id));
+
+        id = 1;
+        id = cipService.TestDataBaseCip(id, 3, 2, 10, 1, 0, 0, 1);
+        id = cipService.TestDataBaseCip(id, 1, 2, 99, 1, 0, 5, (int) (1+ id));
+        id = cipService.TestDataBaseCip(id, 1, 2, 99, 1, 0, 15, (int) (1+ id));*/
+
+        data = cipService.getAllCip();
+
+        String[] s = {"CIP1", "Щелочь", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
+        String[] s2 = {"CIP1", "Ополаскивание", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
+        String[] s3 = {"CIP1", "Кислота", "null", "2020", "5", "5", "5", "10", "55", "2020", "5", "5", "5", "15", "55"};
+        String[] s4 = {"CIP1", "Ополаскивание", "null", "2020", "5", "5", "5", "15", "5", "2020", "5", "5", "5", "25", "5"};
+        String[] s5 = {"CIP2", "Щелочь", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
+        String[] s6 = {"CIP2", "Ополаскивание", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
+        String[] s7 = {"CIP3", "Кислота", "null", "2020", "5", "5", "5", "10", "55", "2020", "5", "5", "5", "15", "55"};
+        String[] s8 = {"CIP4", "Ополаскивание", "null", "2020", "5", "5", "5", "15", "5", "2020", "5", "5", "5", "25", "5"};
         data.put(1, s);
         data.put(2, s2);
         data.put(3, s3);
-        data.put(4, s4);
+        data.put(5, s4);
+        data.put(6, s5);
+        data.put(7, s6);
+        data.put(8, s7);
+        data.put(9, s8);
 
 
         model.addAttribute("data", data);

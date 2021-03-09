@@ -17,7 +17,7 @@ public abstract class Cip {
     @Column(name = "steam_shut_valve")
     private boolean steamShutValve;
     @Column(name = " steam_regulating_valve")
-    private int  steamRegulatingValve;
+    private int steamRegulatingValve;
     @Column(name = "output_flow_temperature_sensor")
     private int outputFlowTemperatureSensor;
     @Column(name = "return_flow_pump")
@@ -29,9 +29,9 @@ public abstract class Cip {
     @Column(name = "input_flow_temperature_sensor")
     private double inputFlowTemperatureSensor;
     @Column(name = "input_flow_lye_valve")
-    private boolean  inputFlowLyeValve;
+    private boolean inputFlowLyeValve;
     @Column(name = "input_flow_acid_valve")
-    private boolean  inputFlowAcidValve;
+    private boolean inputFlowAcidValve;
     @Column(name = "input_flow_rinse_water_valve")
     private boolean inputFlowRinseWaterValve;
     @Column(name = "circulation_valve")
@@ -48,6 +48,34 @@ public abstract class Cip {
     private boolean outputFlowLyeValve;
 
     Cip() {
+    }
+
+    public Cip(Long id, String dateTime, int route, boolean mainFeedPump, boolean steamShutValve,
+               int steamRegulatingValve, int outputFlowTemperatureSensor, boolean returnFlowPump,
+               int inputFlowIntensitySensor, double inputFlowConductivitySensor, double inputFlowTemperatureSensor,
+               boolean inputFlowLyeValve, boolean inputFlowAcidValve, boolean inputFlowRinseWaterValve,
+               boolean circulationValve, boolean drainValve, boolean outputFlowPureWaterValve,
+               boolean outputFlowRinseWaterValve, boolean outputFlowAcidValve, boolean outputFlowLyeValve) {
+        this.id = id;
+        this.dateTime = dateTime;
+        this.route = route;
+        this.mainFeedPump = mainFeedPump;
+        this.steamShutValve = steamShutValve;
+        this.steamRegulatingValve = steamRegulatingValve;
+        this.outputFlowTemperatureSensor = outputFlowTemperatureSensor;
+        this.returnFlowPump = returnFlowPump;
+        this.inputFlowIntensitySensor = inputFlowIntensitySensor;
+        this.inputFlowConductivitySensor = inputFlowConductivitySensor;
+        this.inputFlowTemperatureSensor = inputFlowTemperatureSensor;
+        this.inputFlowLyeValve = inputFlowLyeValve;
+        this.inputFlowAcidValve = inputFlowAcidValve;
+        this.inputFlowRinseWaterValve = inputFlowRinseWaterValve;
+        this.circulationValve = circulationValve;
+        this.drainValve = drainValve;
+        this.outputFlowPureWaterValve = outputFlowPureWaterValve;
+        this.outputFlowRinseWaterValve = outputFlowRinseWaterValve;
+        this.outputFlowAcidValve = outputFlowAcidValve;
+        this.outputFlowLyeValve = outputFlowLyeValve;
     }
 
     public Long getId() {
