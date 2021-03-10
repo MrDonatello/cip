@@ -3,6 +3,7 @@ package com.cip.model.cip;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.util.Objects;
 
 @MappedSuperclass
 public abstract class Cip {
@@ -236,5 +237,35 @@ public abstract class Cip {
 
     public void setOutputFlowLyeValve(boolean outputFlowLyeValve) {
         this.outputFlowLyeValve = outputFlowLyeValve;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cip)) return false;
+        Cip cip = (Cip) o;
+        return route == cip.route &&
+                mainFeedPump == cip.mainFeedPump &&
+                steamShutValve == cip.steamShutValve &&
+                steamRegulatingValve == cip.steamRegulatingValve &&
+                outputFlowTemperatureSensor == cip.outputFlowTemperatureSensor &&
+                returnFlowPump == cip.returnFlowPump &&
+                inputFlowIntensitySensor == cip.inputFlowIntensitySensor &&
+                Double.compare(cip.inputFlowConductivitySensor, inputFlowConductivitySensor) == 0 &&
+                Double.compare(cip.inputFlowTemperatureSensor, inputFlowTemperatureSensor) == 0 &&
+                inputFlowLyeValve == cip.inputFlowLyeValve &&
+                inputFlowAcidValve == cip.inputFlowAcidValve &&
+                inputFlowRinseWaterValve == cip.inputFlowRinseWaterValve &&
+                circulationValve == cip.circulationValve &&
+                drainValve == cip.drainValve &&
+                outputFlowPureWaterValve == cip.outputFlowPureWaterValve &&
+                outputFlowRinseWaterValve == cip.outputFlowRinseWaterValve &&
+                outputFlowAcidValve == cip.outputFlowAcidValve &&
+                outputFlowLyeValve == cip.outputFlowLyeValve;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(route, mainFeedPump, steamShutValve, steamRegulatingValve, outputFlowTemperatureSensor, returnFlowPump, inputFlowIntensitySensor, inputFlowConductivitySensor, inputFlowTemperatureSensor, inputFlowLyeValve, inputFlowAcidValve, inputFlowRinseWaterValve, circulationValve, drainValve, outputFlowPureWaterValve, outputFlowRinseWaterValve, outputFlowAcidValve, outputFlowLyeValve);
     }
 }
