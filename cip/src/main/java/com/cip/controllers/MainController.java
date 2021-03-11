@@ -105,18 +105,18 @@ public class MainController {
     public String showGanttDiagram(Model model) {
         Map<Integer, String[]> data = new LinkedHashMap<>();
 
-        Map<Integer, List<Integer>> referenceValues = cipService.readConfigureFile();//эталонные данные
 
-       /* long id = 1;
-        id = cipService.TestDataBaseCip(id, 1, 1, 1, 10, 12, 0, 1);
-        id = cipService.TestDataBaseCip(id, 2, 1, 1, 10, 11, 2, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 1, 1, 10, 13, 5, (int) (1 + id));
+
+      /*  long id = 1;
+        id = cipService.TestDataBaseCip(id, 1, 1, 1, 11, 12, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 1, 1, 11, 11, 2, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 1, 1, 11, 13, 5, (int) (1 + id));
 
         id = 1;
-        id = cipService.TestDataBaseCip(id, 3, 2, 10, 10, 0, 0, 1);
-        id = cipService.TestDataBaseCip(id, 1, 2, 99, 10, 0, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 2, 99, 10, 0, 15, (int) (1 + id));*/
-
+        id = cipService.TestDataBaseCip(id, 3, 2, 10, 11, 0, 0, 1);
+        id = cipService.TestDataBaseCip(id, 1, 2, 99, 11, 0, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 2, 99, 11, 0, 15, (int) (1 + id));
+*/
         data = cipService.getCipLogOneDay();
 
        /* String[] s = {"CIP1", "Щелочь", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
