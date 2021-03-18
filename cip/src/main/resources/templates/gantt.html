@@ -233,8 +233,6 @@
                         dataTable = new google.visualization.DataTable();
 
 
-
-
                         let htmlData = [[${data}]];
 
 
@@ -249,10 +247,8 @@
                             el = htmlData[subArr];
 
                             dataTable.addRows([[el[0], el[1], el[2],
-                                new Date( el[3], el[4], el[5], el[6], el[7], el[8]), new Date(el[9],el[10],el[11],el[12],el[13],el[14])]
+                                new Date(el[3], el[4], el[5], el[6], el[7], el[8]), new Date(el[9], el[10], el[11], el[12], el[13], el[14])]
                             ]);
-
-
 
 
                             /* dataTable.addRows([
@@ -274,8 +270,6 @@
                         }
 
 
-
-
                         /*    ['CIP1', 'Ополаскивание', null, new Date(2020, 5, 5, 5, 10, 35), new Date(2020, 5, 5, 5, 20, 5)],
                           ['CIP1', 'слив щелочи', null, new Date(2020, 5, 5, 5, 10, 5), new Date(2020, 5, 5, 5, 10, 35)],
                           ['CIP1', 'Танк32', '#cbb69d', new Date(2020, 5, 5, 5, 5, 5), new Date(2020, 5, 5, 5, 20, 5)],
@@ -289,8 +283,12 @@
                           ['CIP2', 'Л.П 21-30', '#obb695', new Date(2020, 5, 5, 5, 10, 10), new Date(2020, 5, 5, 5, 20, 20)]*/
 
 
-
                         var options = {
+                            timeline: {
+                                rowLabelStyle: {fontName: 'Helvetica', fontSize: 16, color: '#603913'},
+                                barLabelStyle: { /*fontName: 'Helvetica',*/ fontSize: 12},
+
+                            },
                             width: 33000,//каждый день ЗАДАННЫЙ В ФИЛЬТРЕ  умножить 33 000  2
                             hAxis: {
 
@@ -299,7 +297,11 @@
                             }
                         };
 
+
+
                         chart.draw(dataTable, options);
+
+
                         google.visualization.events.addListener(chart, 'select', selectHandler);
                     }
 

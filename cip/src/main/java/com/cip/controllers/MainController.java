@@ -103,40 +103,31 @@ public class MainController {
 
     @GetMapping("/gantt")
     public String showGanttDiagram(Model model) {
-        Map<Integer, String[]> data = new LinkedHashMap<>();
+        Map<Integer, String[]> data;
 
 
 
-      /*  long id = 1;
-        id = cipService.TestDataBaseCip(id, 1, 1, 1, 11, 12, 0, 1);
-        id = cipService.TestDataBaseCip(id, 2, 1, 1, 11, 11, 2, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 1, 1, 11, 13, 5, (int) (1 + id));
-
+       /* long id = 1;
+        id = cipService.TestDataBaseCip(id, 1, 1, 1, 18, 12, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 1, 7, 18, 11, 2, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 1, 11, 18, 0, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 1, 16, 18, 1, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 1, 20, 18, 21, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 1, 5, 18, 18, 5, (int) (1 + id));
         id = 1;
-        id = cipService.TestDataBaseCip(id, 3, 2, 10, 11, 0, 0, 1);
-        id = cipService.TestDataBaseCip(id, 1, 2, 99, 11, 0, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 2, 99, 11, 0, 15, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 2, 25, 18, 0, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 2, 35, 18, 0, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 2, 41, 18, 0, 15, (int) (1 + id));
+        id = 1;
+        id = cipService.TestDataBaseCip(id, 3, 3, 45, 18, 0, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 3, 55, 18, 0, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 3, 51, 18, 0, 15, (int) (1 + id));
+        id = 1;
+        id = cipService.TestDataBaseCip(id, 1, 4, 64, 18, 0, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 4, 65, 18, 0, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 4, 75, 18, 0, 15, (int) (1 + id));
 */
-        data = cipService.getCipLogOneDay();
-
-       /* String[] s = {"CIP1", "Щелочь", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
-        String[] s2 = {"CIP1", "Ополаскивание", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
-        String[] s3 = {"CIP1", "Кислота", "null", "2020", "5", "5", "5", "10", "55", "2020", "5", "5", "5", "15", "55"};
-        String[] s4 = {"CIP1", "Ополаскивание", "null", "2020", "5", "5", "5", "15", "5", "2020", "5", "5", "5", "25", "5"};
-        String[] s5 = {"CIP2", "Щелочь", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
-        String[] s6 = {"CIP2", "Ополаскивание", "null", "2020", "5", "5", "5", "5", "5", "2020", "5", "5", "5", "10", "5"};
-        String[] s7 = {"CIP3", "Кислота", "null", "2020", "5", "5", "5", "10", "55", "2020", "5", "5", "5", "15", "55"};
-        String[] s8 = {"CIP4", "Ополаскивание", "null", "2020", "5", "5", "5", "15", "5", "2020", "5", "5", "5", "25", "5"};
-        data.put(1, s);
-        data.put(2, s2);
-        data.put(3, s3);
-        data.put(5, s4);
-        data.put(6, s5);
-        data.put(7, s6);
-        data.put(8, s7);
-        data.put(9, s8);*/
-
-
+        data = cipService.getAllCipLogOneDay();
         model.addAttribute("data", data);
         return "gantt";
     }
