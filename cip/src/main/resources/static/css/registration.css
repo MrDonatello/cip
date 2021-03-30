@@ -56,3 +56,12 @@
     width: auto;
     overflow-x: scroll;
 }
+
+.nav-form{
+    margin-bottom: 30px;
+}
+.span{
+    color: red;
+    font-style: italic;
+}
+

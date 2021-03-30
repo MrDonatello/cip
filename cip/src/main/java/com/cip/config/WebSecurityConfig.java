@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/logout")
-                .permitAll();
+                .permitAll().and().csrf().disable().cors();
     }
 
     @Override

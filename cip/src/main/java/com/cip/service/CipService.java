@@ -3,6 +3,7 @@ package com.cip.service;
 import com.cip.dao.cip.*;
 import com.cip.dao.user.UserRepository;
 import com.cip.model.cip.*;
+import com.cip.model.dto.GanttDTO;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -50,6 +51,42 @@ public class CipService {
         return map;
     }
 
+    public Map<Integer, String[]> getPropertyElement(GanttDTO ganttDTO) {
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String[] st = ganttDTO.getStart().split("[,\\s\\-:.T]");
+        Calendar start = new GregorianCalendar(Integer.parseInt(st[0]), Integer.parseInt(st[1]) - 1, Integer.parseInt(st[2]), Integer.parseInt(st[3]), Integer.parseInt(st[4]), Integer.parseInt(st[5]));
+        start.add(Calendar.HOUR_OF_DAY, 6);
+        String[] e = ganttDTO.getEnd().split("[,\\s\\-:.T]");
+        Calendar end = new GregorianCalendar(Integer.parseInt(e[0]), Integer.parseInt(e[1]) - 1, Integer.parseInt(e[2]), Integer.parseInt(e[3]), Integer.parseInt(e[4]), Integer.parseInt(e[5]));
+        end.add(Calendar.HOUR_OF_DAY, 6);
+        List<Cip> cipList = new ArrayList<>();
+        switch (ganttDTO.getCipNumber()) {
+            case ("CIP1"): {
+                cipList = cip1Repository.findByDateTimeBetween(f.format(start.getTime()), f.format(end.getTime()));
+                break;
+            }
+            case ("CIP2"): {
+                cipList = cip2Repository.findByDateTimeBetween(f.format(start.getTime()), f.format(end.getTime()));
+                break;
+            }
+            case ("CIP3"): {
+                cipList = cip3Repository.findByDateTimeBetween(f.format(start.getTime()), f.format(end.getTime()));
+                break;
+            }
+            case ("CIP4"): {
+                cipList = cip4Repository.findByDateTimeBetween(f.format(start.getTime()), f.format(end.getTime()));
+                break;
+            }
+        }
+        Map<Integer, String[]> map = parsingAllCip(cipList);
+
+        Map<Integer, List<String>> listMap = readConfigureFile();
+
+        map.put(10, listMap.get(cipList.get(1).getRoute()).toArray(new String[0]));
+
+        return map;
+    }
+
     public Map<Integer, String[]> getAllCipLogForDate(Calendar start, Calendar end) {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<Cip> cipList = cip1Repository.findByDateTimeBetween(f.format(start.getTime()), f.format(end.getTime()));
@@ -57,6 +94,13 @@ public class CipService {
         cipList.addAll(cip3Repository.findByDateTimeBetween(f.format(start.getTime()), f.format(end.getTime())));
         cipList.addAll(cip4Repository.findByDateTimeBetween(f.format(start.getTime()), f.format(end.getTime())));
         return parsingAllCip(cipList);
+    }
+
+    private double getRealTime(String[] dateTimeAllProgramStart, String[] dateTimeEnd) {
+        double timeWorkRealHour = (Integer.parseInt(dateTimeEnd[3]) - Integer.parseInt(dateTimeAllProgramStart[3])) * 60;
+        double timeWorkRealMinute = Integer.parseInt(dateTimeEnd[4]) - Integer.parseInt(dateTimeAllProgramStart[4]);
+        double timeWorkRealSecond = (Integer.parseInt(dateTimeEnd[5]) - Integer.parseInt(dateTimeAllProgramStart[5])) / 60;// сделать правильно с остатком от деления и целым (все в сек)
+        return timeWorkRealMinute + timeWorkRealHour + timeWorkRealSecond;
     }
 
     private Map<Integer, String[]> parsingAllCip(List<Cip> cipList) {
@@ -79,18 +123,12 @@ public class CipService {
                     dateTimeEnd = lastObject.getDateTime().split("[,\\s\\-:]");
                     program = whatProgram(start);
                     assert program != null;
-                    String cipNumber = whatCipNumber(start);
+                    String cipNumber = whatCipNumber(start.getRoute());
                     if (program.equals("Ополаскивание")) {
                         dateTimeAllProgramStart = dateTimeStart;
                     }
                     if (program.equals("Последнее ополаскивание")) {
-                        double timeWorkRealHour = (Integer.parseInt(dateTimeEnd[3]) - Integer.parseInt(dateTimeAllProgramStart[3])) * 60;
-                        double timeWorkRealMinute = Integer.parseInt(dateTimeEnd[4]) - Integer.parseInt(dateTimeAllProgramStart[4]);
-                        double timeWorkRealSecond = (Integer.parseInt(dateTimeEnd[5]) - Integer.parseInt(dateTimeAllProgramStart[5])) / 60;
-                        timeWorkRealMinute = timeWorkRealMinute + timeWorkRealHour + timeWorkRealSecond;
-
-
-                        String[] result = checkObjectToReferenceValues(data.get(count - 1)[1], lastObject.getRoute(), timeWorkRealMinute);
+                        String[] result = checkObjectToReferenceValues(data.get(count - 1)[1], lastObject.getRoute(), getRealTime(dateTimeAllProgramStart, dateTimeEnd));
                         fullObject = new String[]{cipNumber, result[0], result[1],
                                 dateTimeAllProgramStart[0], dateTimeAllProgramStart[1], dateTimeAllProgramStart[2], dateTimeAllProgramStart[3], dateTimeAllProgramStart[4], dateTimeAllProgramStart[5],
                                 dateTimeEnd[0], dateTimeEnd[1], dateTimeEnd[2], dateTimeEnd[3], dateTimeEnd[4], dateTimeEnd[5]};
@@ -150,20 +188,16 @@ public class CipService {
         return null;
     }
 
-    private String whatCipNumber(Cip cip) {
-        if (cip.getRoute() <= 23) {
+    private String whatCipNumber(int rout) {
+        if (rout <= 23) {
             return "CIP1";
-        }
-        if (cip.getRoute() >= 23 && cip.getRoute() <= 41) {
+        } else if (rout <= 41) {
             return "CIP2";
-        }
-        if (cip.getRoute() >= 42 && cip.getRoute() <= 63) {
+        } else if (rout <= 63) {
             return "CIP3";
-        }
-        if (cip.getRoute() >= 64) {
+        } else {
             return "CIP4";
         }
-        return null;
     }
 
     private String[] checkObjectToReferenceValues(String program, int rout, double timeWorkReal) {
@@ -195,74 +229,9 @@ public class CipService {
         return result;
     }
 
-    public Map<Integer, String[]> getAllCipLogOneDay() {//унифицировать для всех сипов
-        //SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public Map<Integer, String[]> getAllCipLogOneDay() {
         Calendar dayAgo = Calendar.getInstance();
-        dayAgo.add(Calendar.DAY_OF_MONTH, -1);
-        //List<Cip> cip1List = cip1Repository.findByDateTimeBetween(f.format(dayAgo.getTime()), f.format(Calendar.getInstance().getTime()));
-
-        /*String[] dateTimeStart, dateTimeEnd, fullObject, dateTimeAllProgramStart = new String[5];
-
-
-        String program;
-        int count = 0;
-        int count2 = 0;
-        Cip start = null;
-        Cip lastObject = null;
-
-        for (Cip1 cip1 : cip1List) {// возможно сделать фор и ленс минус один для последнего элемента и убрать count  // отдельный метод далее идет
-            count2++;
-            if (start == null) {
-
-                start = cip1;
-            } else {
-                if (!(start.equals(cip1)) || count2 == cip1List.size()) {// добавлять еще один объект с по низу всей мойки старт это если предворительное началось конец это когда последне опаласкивание закончилось
-                    dateTimeStart = start.getDateTime().split("[,\\s\\-:]");
-                    assert lastObject != null;
-                    dateTimeEnd = lastObject.getDateTime().split("[,\\s\\-:]");
-                    program = whatProgram(start);
-                    assert program != null;
-                    if (program.equals("Ополаскивание")) {
-                        dateTimeAllProgramStart = dateTimeStart;
-                    }
-                    if (program.equals("Последнее ополаскивание")) {
-
-                        double timeWorkRealHour = (Integer.parseInt(dateTimeEnd[3]) - Integer.parseInt(dateTimeAllProgramStart[3])) * 60;
-                        double timeWorkRealMinute = Integer.parseInt(dateTimeEnd[4]) - Integer.parseInt(dateTimeAllProgramStart[4]);
-                        double timeWorkRealSecond = (Integer.parseInt(dateTimeEnd[5]) - Integer.parseInt(dateTimeAllProgramStart[5])) / 60;
-                        timeWorkRealMinute = timeWorkRealMinute + timeWorkRealHour + timeWorkRealSecond;
-
-                        String programLastStep = data.get(count - 1)[1];
-                        int rout = lastObject.getRoute();
-
-                        String[] result = checkObjectToReferenceValues(programLastStep, rout, timeWorkRealMinute);
-
-                        fullObject = new String[]{"CIP1", result[0], result[1],
-                                dateTimeAllProgramStart[0], dateTimeAllProgramStart[1], dateTimeAllProgramStart[2], dateTimeAllProgramStart[3], dateTimeAllProgramStart[4], dateTimeAllProgramStart[5],
-                                dateTimeEnd[0], dateTimeEnd[1], dateTimeEnd[2], dateTimeEnd[3], dateTimeEnd[4], dateTimeEnd[5]};
-                        data.put(count, fullObject);
-                        count++;
-                        fullObject = new String[]{"CIP1", "","#ffffff",
-                                dateTimeEnd[0], dateTimeEnd[1], dateTimeEnd[2], dateTimeEnd[3], dateTimeEnd[4], dateTimeEnd[5],
-                                dateTimeEnd[0], dateTimeEnd[1], dateTimeEnd[2], dateTimeEnd[3], dateTimeEnd[4], dateTimeEnd[5]};
-                        data.put(count, fullObject);
-                        count++;
-
-                        fullObject = new String[]{"CIP1", "","#ffffff",
-                                dateTimeAllProgramStart[0], dateTimeAllProgramStart[1], dateTimeAllProgramStart[2], dateTimeAllProgramStart[3], dateTimeAllProgramStart[4], String.valueOf(Integer.parseInt(dateTimeAllProgramStart[5]) - 1),
-                                dateTimeAllProgramStart[0], dateTimeAllProgramStart[1], dateTimeAllProgramStart[2], dateTimeAllProgramStart[3], dateTimeAllProgramStart[4], dateTimeAllProgramStart[5]};
-                        data.put(count, fullObject);
-                        count++;
-                    }
-                    fullObject = new String[]{"CIP1", program, null, dateTimeStart[0], dateTimeStart[1], dateTimeStart[2], dateTimeStart[3], dateTimeStart[4], dateTimeStart[5],
-                            dateTimeEnd[0], dateTimeEnd[1], dateTimeEnd[2], dateTimeEnd[3], dateTimeEnd[4], dateTimeEnd[5]};
-                    data.put(count, fullObject);
-                    count++;
-                    start = cip1;
-                }
-                lastObject = cip1;
-            }
-        }*/
+        dayAgo.add(Calendar.DAY_OF_MONTH, -2);
         return getAllCipLogForDate(dayAgo, Calendar.getInstance());
     }
 
