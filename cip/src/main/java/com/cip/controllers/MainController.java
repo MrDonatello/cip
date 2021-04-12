@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Controller
@@ -90,7 +89,7 @@ public class MainController {
             @RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) {
         model.addAttribute("name", name);
         return "greeting";
-    }*/
+    }
 
     @GetMapping("/greeting")
     public String showDashboard(Model model) {
@@ -101,45 +100,58 @@ public class MainController {
 
         model.addAttribute("data", data);
         return "greeting";
-    }
+    }*/
 
     @GetMapping("/gantt")
     public String showGanttDiagram(Model model) {
         Map<Integer, String[]> data;
 
-
-
        /* long id = 1;
-        id = cipService.TestDataBaseCip(id, 1, 1, 1, 30, 12, 0, 1);
-        id = cipService.TestDataBaseCip(id, 2, 1, 7, 30, 11, 2, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 1, 11, 30, 0, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 1, 16, 30, 1, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 1, 20, 30, 21, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 1, 5, 30, 18, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 1, 1, 3, 12, 12, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 1, 7, 3, 12, 11, 2, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 1, 11, 3, 12, 0, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 1, 16, 3, 12, 1, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 1, 20, 3, 12, 21, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 1, 5, 3, 12, 18, 5, (int) (1 + id));
         id = 1;
-        id = cipService.TestDataBaseCip(id, 3, 2, 25, 30, 1, 0, 1);
-        id = cipService.TestDataBaseCip(id, 2, 2, 35, 30, 2, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 2, 41, 30, 2, 15, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 2, 25, 3, 12, 1, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 2, 35, 3, 12, 2, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 2, 41, 3, 12, 2, 15, (int) (1 + id));
         id = 1;
-        id = cipService.TestDataBaseCip(id, 3, 3, 45, 30, 2, 0, 1);
-        id = cipService.TestDataBaseCip(id, 2, 3, 55, 30, 2, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 3, 51, 30, 2, 15, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 3, 45, 3, 12, 2, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 3, 55, 3, 12, 2, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 3, 51, 3, 12, 2, 15, (int) (1 + id));
         id = 1;
-        id = cipService.TestDataBaseCip(id, 1, 4, 64, 30, 2, 0, 1);
-        id = cipService.TestDataBaseCip(id, 2, 4, 65, 30, 2, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 4, 75, 30, 2, 15, (int) (1 + id));
-*/
-
+        id = cipService.TestDataBaseCip(id, 1, 4, 64, 3, 12, 2, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 4, 65, 3, 12, 2, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 4, 75, 3, 12, 2, 15, (int) (1 + id));*/
         data = cipService.getAllCipLogOneDay();
         model.addAttribute("data", data);
         return "gantt";
     }
 
-
     @PostMapping("/gantt")
     public @ResponseBody
-    Map<Integer, String[]> registration(@RequestBody GanttDTO ganttDTO) {
+    Map<Integer, String[]> objectData(@RequestBody GanttDTO ganttDTO) {
+        if (ganttDTO.getStart() != null) {
+            return cipService.getPropertyElement(ganttDTO);
+        } else {
+            return cipService.getCipFilter(ganttDTO);
+        }
+    }
 
-        return cipService.getPropertyElement(ganttDTO);
+
+    @GetMapping("/journal")
+    public String showJournal(Model model) {
+        Map<Integer, String[]> data;
+        data = cipService.getAllCipLogOneDay();
+        model.addAttribute("data", data);
+        return "journal";
+    }
+
+    @PostMapping("/journal")
+    public @ResponseBody
+    Map<Integer, String[]> p() {
+        return null;
     }
 }

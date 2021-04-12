@@ -17,7 +17,7 @@
             crossorigin="anonymous"></script>
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>-->
-    <title>Washing Page</title>
+    <title>Gantt Page</title>
 </head>
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -54,7 +54,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/journal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                  stroke-linejoin="round" class="feather feather-file">
@@ -78,13 +78,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" class="feather feather-layers">
-                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                                <polyline points="2 17 12 22 22 17"></polyline>
-                                <polyline points="2 12 12 17 22 12"></polyline>
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                             Диаграмма эффективности объекта
                         </a>
                     </li>
@@ -94,25 +88,25 @@
                     <span>Фильтр поиска</span>
                 </h6>
 
-                <form class="form-signin" method="post" th:action="@{/gantt}">
+                <form class="form-signin" name="s" id="search">
                     <div>
                         <li class="nav-form">
                             <label for="start-datetime-local-input">Начало периода</label>
                             <div class="col-10">
-                                <input class="form-control" type="datetime-local" value="2021-03-19T13:45:00"
-                                       id="start-datetime-local-input">
+                                <input class="form-control" type="datetime-local" value="2021-04-11T00:00:00"
+                                       name="startSearch" id="start-datetime-local-input">
                             </div>
                         </li>
                         <li class="nav-form">
                             <label for="end-datetime-local-input">Окончание периода</label>
                             <div class="col-10">
-                                <input class="form-control" type="datetime-local" value="2021-03-19T13:45:00"
-                                       id="end-datetime-local-input">
+                                <input class="form-control" type="datetime-local" value="2021-04-12T00:00:00"
+                                       name="endSearch" id="end-datetime-local-input">
                             </div>
                         </li>
                         <li class="nav-form">
-                            <label for="washType">Тип мойки</label>
-                            <select class="form-control" id="washType">
+                            <label for="washType">Фильтр по типу мойки</label>
+                            <select name="type" class="form-control" id="washType">
                                 <option>Все</option>
                                 <option>Мойка щелочью</option>
                                 <option>Мойка кислотой</option>
@@ -120,8 +114,8 @@
                             </select>
                         </li>
                         <li class="nav-form">
-                            <label for="routType">Тип мойки</label>
-                            <select class="form-control" id="routType">
+                            <label for="routType">Фильтр по контурам</label>
+                            <select name="cip" class="form-control" id="routType">
                                 <option>Все</option>
                                 <option>СИП 1</option>
                                 <option>СИП 2</option>
@@ -130,8 +124,8 @@
                             </select>
                         </li>
                         <li class="nav-form">
-                            <label for="objectType">Тип мойки</label>
-                            <select class="form-control" id="objectType">
+                            <label for="objectType">Фильтр по объектам</label>
+                            <select name="object" class="form-control" id="objectType">
                                 <option>Все</option>
                                 <option>Танк 31</option>
                                 <option>Танк 32</option>
@@ -229,13 +223,12 @@
                             </select>
                         </li>
                     </div>
-
-
                     <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Поиск</button>
                 </form>
 
             </div>
         </nav>
+
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             <!-- <div class="chartjs-size-monitor"
@@ -334,13 +327,13 @@
                         select(selection);
                     }
 
+
                 </script>
             </div>
 
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <script th:inline="javascript">
-
 
                         function select(selection) {
                             var json = {
@@ -395,12 +388,17 @@
 
                                     // Блок 1 ополаскивание
                                     $('#td1-1').text(response[0][1]);//тип мойки
+                                    console.log(response);
                                     getTime(response, 0, 1);//время мойки
                                     //$('#td1-3').text(response); //для ошибок
                                     $('#td1-4').text(response[10][2]);//заданное время
                                     const real_1 = getRealTime(response, 0);//реальное время
                                     $('#td1-5').text(real_1);
                                     getDifferent(response, real_1, 1, 2);//разница во времени
+                                    $('#td1-7').text(response[0][15]);//температура
+                                    $('#td1-8').text(response[0][16]);//концентрация
+                                    $('#td1-9').text(response[0][17]);//поток
+
 
                                     //Блок 2
                                     if (number === 2) {
@@ -418,6 +416,9 @@
                                     const real_2 = getRealTime(response, 1);//реальное время
                                     $('#td2-5').text(real_2);
                                     getDifferent(response, real_2, 2, number);//разница во времени
+                                    $('#td2-7').text(response[1][15]);//температура
+                                    $('#td2-8').text(response[1][16]);//концентрация
+                                    $('#td2-9').text(response[1][17]);//поток
 
                                     //Блок 3
                                     var timeR;
@@ -438,6 +439,9 @@
                                     const real_3 = getRealTime(response, number);//реальное время
                                     $('#td3-5').text(real_3);
                                     getDifferent(response, real_3, 3, timeR);//разница во времени
+                                    $('#td3-7').text(response[number][15]);//температура
+                                    $('#td3-8').text(response[number][16]);//концентрация
+                                    $('#td3-9').text(response[number][17]);//поток
 
                                     //Блок 4
                                     if (timeR !== 4) {
@@ -454,6 +458,9 @@
                                         const real_4 = getRealTime(response, number);//реальное время
                                         $('#td4-5').text(real_4);
                                         getDifferent(response, real_4, 4, timeR);//разница во времени
+                                        $('#td4-7').text(response[number][15]);//температура
+                                        $('#td4-8').text(response[number][16]);//концентрация
+                                        $('#td4-9').text(response[number][17]);//поток
 
                                         //Блок 5
                                         number = 7;
@@ -465,14 +472,20 @@
                                         const real_5 = getRealTime(response, number);//реальное время
                                         $('#td5-5').text(real_5);
                                         getDifferent(response, real_5, 5, timeR);//разница во времени
+                                        $('#td5-7').text(response[number][15]);//температура
+                                        $('#td5-8').text(response[number][16]);//концентрация
+                                        $('#td5-9').text(response[number][17]);//поток
 
-                                    }else {
+                                    } else {
                                         $('#td4-1').text("");
                                         $('#td4-2').text("");
                                         $('#td4-3').text("");
                                         $('#td4-4').text("");
                                         $('#td4-5').text("");
                                         $('#td4-6').text("");
+                                        $('#td4-7').text("");
+                                        $('#td4-8').text("");
+                                        $('#td4-9').text("");
 
                                         $('#td5-1').text("");
                                         $('#td5-2').text("");
@@ -480,6 +493,9 @@
                                         $('#td5-4').text("");
                                         $('#td5-5').text("");
                                         $('#td5-6').text("");
+                                        $('#td5-7').text("");
+                                        $('#td5-8').text("");
+                                        $('#td5-9').text("");
                                     }
                                 }
                             });
@@ -528,6 +544,9 @@
                         <th>Заданное время</th>
                         <th>Реальное время</th>
                         <th>Разница времени</th>
+                        <th>Температура</th>
+                        <th>Концентрация</th>
+                        <th>Скорость потока</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -538,6 +557,9 @@
                         <td id="td1-4"></td>
                         <td id="td1-5"></td>
                         <td id="td1-6"></td>
+                        <td id="td1-7"></td>
+                        <td id="td1-8"></td>
+                        <td id="td1-9"></td>
                     </tr>
                     <tr>
                         <td id="td2-1"></td>
@@ -546,6 +568,9 @@
                         <td id="td2-4"></td>
                         <td id="td2-5"></td>
                         <td id="td2-6"></td>
+                        <td id="td2-7"></td>
+                        <td id="td2-8"></td>
+                        <td id="td2-9"></td>
                     </tr>
                     <tr>
                         <td id="td3-1"></td>
@@ -554,6 +579,9 @@
                         <td id="td3-4"></td>
                         <td id="td3-5"></td>
                         <td id="td3-6"></td>
+                        <td id="td3-7"></td>
+                        <td id="td3-8"></td>
+                        <td id="td3-9"></td>
                     </tr>
                     <tr>
                         <td id="td4-1"></td>
@@ -562,6 +590,9 @@
                         <td id="td4-4"></td>
                         <td id="td4-5"></td>
                         <td id="td4-6"></td>
+                        <td id="td4-7"></td>
+                        <td id="td4-8"></td>
+                        <td id="td4-9"></td>
                     </tr>
                     <tr>
                         <td id="td5-1"></td>
@@ -570,6 +601,9 @@
                         <td id="td5-4"></td>
                         <td id="td5-5"></td>
                         <td id="td5-6"></td>
+                        <td id="td5-7"></td>
+                        <td id="td5-8"></td>
+                        <td id="td5-9"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -577,6 +611,92 @@
         </main>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('form').submit(function () {
+            var json = {
+                "object": $('#objectType').val(),
+                "cip": $('#routType').val(),
+                "type": $('#washType').val(),
+                "startSearch": $('#start-datetime-local-input').val(),
+                "endSearch": $('#end-datetime-local-input').val(),
+            };
+            console.log(json);
+            $.ajax({
+                type: 'POST',
+                contentType: "application/json",
+                url: "/gantt",
+                data: JSON.stringify(json),
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    // Вывод текста результата отправки в текущей форме
+                    console.log('123567');
+                    google.charts.load('current', {'packages': ['timeline']});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    var chart, dataTable;
+
+                    function drawChart() {
+                        var container = document.getElementById('timeline');
+                        chart = new google.visualization.Timeline(container);
+                        dataTable = new google.visualization.DataTable();
+
+
+                        let htmlData = data;
+
+
+                        dataTable.addColumn({type: 'string', id: ' Cip'});
+                        dataTable.addColumn({type: 'string', id: 'Object'});
+                        dataTable.addColumn({type: 'string', id: 'style', role: 'style'});
+                        dataTable.addColumn({type: 'date', id: 'Start'});
+                        dataTable.addColumn({type: 'date', id: 'End'});
+
+
+                        var el;
+                        for (let subArr of Object.keys(htmlData)) {
+                            el = htmlData[subArr];
+
+                            dataTable.addRows([[el[0], el[1], el[2],
+                                new Date(el[3], el[4] - 1, el[5], el[6], el[7], el[8]), new Date(el[9], el[10] - 1, el[11], el[12], el[13], el[14])]
+                            ]);
+
+                        }
+
+
+                        var options = {
+                            timeline: {
+                                rowLabelStyle: {fontName: 'Helvetica', fontSize: 16, color: '#603913'},
+                                barLabelStyle: { /*fontName: 'Helvetica',*/ fontSize: 12},
+
+                            },
+                            width: 33000,//каждый день ЗАДАННЫЙ В ФИЛЬТРЕ  умножить 33 000  2
+                            hAxis: {
+
+                                format: '      d.MM.yy H:mm',
+                                timezone: 'UTC + 6',
+                                gridlines: {count: 15}
+                            }
+                        };
+
+
+                        chart.draw(dataTable, options);
+
+
+                        google.visualization.events.addListener(chart, 'select', selectHandler);
+                    }
+
+
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
 
 </body>
 </html>

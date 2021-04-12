@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://getbootstrap.com/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.5/examples/dashboard/dashboard.css" rel="stylesheet">
+    <link th:href="@{/css/registration.css}" rel="stylesheet">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.js"
+            integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+            crossorigin="anonymous"></script>
+    <title>Journal Page</title>
+</head>
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" th:inline="text">Здравствуйте
+        [[${#httpServletRequest.remoteUser}]]</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <form class="nav-link" th:action="@{/logout}" method="post">
+                <input type="submit" value="Выход"/>
+            </form>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="sidebar-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/engineer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                <path fill-rule="evenodd"
+                                      d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"></path>
+                            </svg>
+                            Назад <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/gantt">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-file">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                <polyline points="13 2 13 9 20 9"></polyline>
+                            </svg>
+                            Диаграмма Ганта
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-bar-chart-2">
+                                <line x1="18" y1="20" x2="18" y2="10"></line>
+                                <line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line>
+                            </svg>
+                            Диаграмма эффективности контура
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-layers">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                            Диаграмма эффективности объекта
+                        </a>
+                    </li>
+                </ul>
+
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Фильтр поиска</span>
+                </h6>
+
+                <form class="form-signin" name="s" id="search">
+                    <div>
+                        <li class="nav-form">
+                            <label for="start-datetime-local-input">Начало периода</label>
+                            <div class="col-10">
+                                <input class="form-control" type="datetime-local" value="2021-04-11T00:00:00"
+                                       name="startSearch" id="start-datetime-local-input">
+                            </div>
+                        </li>
+                        <li class="nav-form">
+                            <label for="end-datetime-local-input">Окончание периода</label>
+                            <div class="col-10">
+                                <input class="form-control" type="datetime-local" value="2021-04-12T00:00:00"
+                                       name="endSearch" id="end-datetime-local-input">
+                            </div>
+                        </li>
+                        <li class="nav-form">
+                            <label for="washType">Фильтр по отделам</label>
+                            <select name="type" class="form-control" id="washType">
+                                <option>Все</option>
+                                <option>Пастеризационное отделение</option>
+                                <option>Заготовительное отделение</option>
+                                <option>Участок хранения молока</option>
+                                <option>Участок приемки молока</option>
+                            </select>
+                        </li>
+                        <li class="nav-form">
+                            <label for="routType">Фильтр по контурам</label>
+                            <select name="cip" class="form-control" id="routType">
+                                <option>Все</option>
+                                <option>СИП 1</option>
+                                <option>СИП 2</option>
+                                <option>СИП 3</option>
+                                <option>СИП 4</option>
+                            </select>
+                        </li>
+                        <li class="nav-form">
+                            <label for="objectType">Фильтр по объектам</label>
+                            <select name="object" class="form-control" id="objectType">
+                                <option>Все</option>
+                                <option>Танк 31</option>
+                                <option>Танк 32</option>
+                                <option>Танк 33</option>
+                                <option>Танк 34</option>
+                                <option>Танк 35</option>
+                                <option>Танк 36</option>
+                                <option>Линия подачи 31-36</option>
+                                <option>Линия 6</option>
+                                <option>Линия подачи 3.1</option>
+                                <option>Линия подачи 3.2</option>
+                                <option>Танк УХМ 1</option>
+                                <option>Танк УХМ 2</option>
+                                <option>Танк УХМ 3</option>
+                                <option>Танк УХМ 4</option>
+                                <option>Танк УХМ 5</option>
+                                <option>Танк УХМ 6</option>
+                                <option>Танк УХМ 7</option>
+                                <option>Танк УХМ 8</option>
+                                <option>Танк УХМ 9</option>
+                                <option>Танк ПУ 1</option>
+                                <option>Линия сырого молока</option>
+                                <option>Линия УХМ</option>
+                                <option>Линия подработки</option>
+                                <option>Танк 21</option>
+                                <option>Танк 22</option>
+                                <option>Танк 23</option>
+                                <option>Танк 24</option>
+                                <option>Танк 25</option>
+                                <option>Танк 26</option>
+                                <option>Танк 27</option>
+                                <option>Танк 28</option>
+                                <option>Танк 29</option>
+                                <option>Танк 30</option>
+                                <option>Линия подачи 21-30</option>
+                                <option>Линия подачи 38-39</option>
+                                <option>Линия подачи йогурта</option>
+                                <option>Линия 14.1</option>
+                                <option>Линия 14.2</option>
+                                <option>Линия 13.1</option>
+                                <option>Линия 13.2</option>
+                                <option>Скнима</option>
+                                <option>Линия ЗО-ПСУ</option>
+                                <option>Танк 11</option>
+                                <option>Танк 12</option>
+                                <option>Танк 13</option>
+                                <option>Танк 14</option>
+                                <option>Танк 15</option>
+                                <option>Танк 16</option>
+                                <option>Танк 17</option>
+                                <option>Танк 18</option>
+                                <option>Танк 19</option>
+                                <option>Танк 20</option>
+                                <option>Линия подачи 11-20</option>
+                                <option>Линия 5.1</option>
+                                <option>Линия 4.1</option>
+                                <option>Линия 1.1</option>
+                                <option>Топка масла</option>
+                                <option>Топка жира</option>
+                                <option>Линия масла</option>
+                                <option>Линия жира</option>
+                                <option>Линия 1.2</option>
+                                <option>Линия 4.2</option>
+                                <option>Линия 5.2</option>
+                                <option>Линия ополосков</option>
+                                <option>Танк 1</option>
+                                <option>Танк 2</option>
+                                <option>Танк 3</option>
+                                <option>Танк 4</option>
+                                <option>Танк 5</option>
+                                <option>Танк 6</option>
+                                <option>Танк 7</option>
+                                <option>Танк 8</option>
+                                <option>Танк 9</option>
+                                <option>Танк 10</option>
+                                <option>Линия подачи 1-10</option>
+                                <option>Линия 11.1</option>
+                                <option>Линия 11.2</option>
+                                <option>Линия 12.1</option>
+                                <option>Линия 12.2</option>
+                                <option>Линия 10</option>
+                                <option>Линия подачи 42-43</option>
+                                <option>Линия подачи 39-41</option>
+                                <option>Танк 39</option>
+                                <option>Танк 40</option>
+                                <option>Танк 41</option>
+                                <option>Танк 42</option>
+                                <option>Танк 43</option>
+                                <option>Танк Заготовки 1</option>
+                                <option>Танк Заготовки 2</option>
+                                <option>Танк Заготовки 3</option>
+                                <option>Танк Заготовки 4</option>
+                                <option>Масляный буфер</option>
+                                <option>Жировой буфер</option>
+                            </select>
+                        </li>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Поиск</button>
+                </form>
+
+            </div>
+        </nav>
+
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Отчет по мойке</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Распечатать</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Сохранить в pdf</button>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-calendar">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Опции
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="tl" id="table_div" style="height: auto; text-align: center;">
+
+                <script th:inline="javascript">
+
+                    google.charts.load('current', {'packages': ['table']});
+                    google.charts.setOnLoadCallback(drawTable);
+
+                    var dataTable;
+
+                    function drawTable() {
+                        dataTable = new google.visualization.DataTable();
+                        let htmlData = [[${data}]];
+
+                        dataTable.addColumn('string', 'Контур');
+                        dataTable.addColumn('string', 'Отдел');
+                        dataTable.addColumn('string', 'Объект');
+                        dataTable.addColumn('string', 'Программа');
+                        dataTable.addColumn('string', 'Начало');
+                        dataTable.addColumn('string', 'Окончание');
+                        dataTable.addColumn('string', 'Статус');
+
+                        var el;
+                        for (let subArr of Object.keys(htmlData)) {
+                            el = htmlData[subArr];
+                            console.log(el);
+                            if (el.length > 18) {
+                                if (el[18] === "Вытеснение кислоты") {
+                                    el[18] = "Мойка кислоттой";
+                                } else if (el[18] === "Вытеснение щелочи") {
+                                    el[18] = "Мойка щелочью";
+                                }
+
+                                  if (el[2] === "#FF0000") {
+                                      el[2] = 'время мойки занижено';
+                                  } else if (el[2] === "#FFFF00") {
+                                      el[2] = 'время мойки завышено';
+                                  } else if (el[2] === "#049a00") {
+                                      el[2] = 'мойка прошла штатно';
+                                  }
+
+                                dataTable.addRows([[el[0], el[19], el[1], el[18],
+                                    el[3] + '-' + el[4] + '-' + el[5] + ' ' + el[6] + ':' + el[7] + ':' + el[8], el[9] + '-' + el[10] + '-' + el[11] + ' ' + el[12] + ':' + el[13] + ':' + el[14]/* el[9] + '-' + el[10] + '-' + el[11] + ' ' + el[12] + ':' + el[13] + ':' + el[14]*/, el[2]
+                                ]]);
+                            }
+                        }
+
+                        var options = {
+                            showRowNumber: false,
+                            page: 'enable',
+                            pageSize: 30,
+                            width: '100%',
+                            pagingSymbols: {
+                                prev: 'prev',
+                                next: 'next'
+                            },
+                            pagingButtonsConfiguration: 'auto'
+                        };
+
+                        var table = new google.visualization.Table(document.getElementById('table_div'));
+                        table.draw(dataTable, options);
+                    }
+                </script>
+            </div>
+        </main>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('form').submit(function () {
+            var json = {
+                "object": $('#objectType').val(),
+                "cip": $('#routType').val(),
+                "type": $('#washType').val(),
+                "startSearch": $('#start-datetime-local-input').val(),
+                "endSearch": $('#end-datetime-local-input').val(),
+            };
+            console.log(json);
+            $.ajax({
+                type: 'POST',
+                contentType: "application/json",
+                url: "/journal",
+                data: JSON.stringify(json),
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    //google table
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
