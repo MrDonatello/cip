@@ -73,13 +73,13 @@
                                 <line x1="12" y1="20" x2="12" y2="4"></line>
                                 <line x1="6" y1="20" x2="6" y2="14"></line>
                             </svg>
-                            Диаграмма эффективности контура
+                            Эффективность работы контура
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/efficiency">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Диаграмма эффективности объекта
+                            Эффективность мойки объекта
                         </a>
                     </li>
                 </ul>
@@ -243,7 +243,7 @@
                  </div>
              </div>-->
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Диаграмма Ганта</h1>
+                <h1 class="h2">Диаграмма мойки оборудования</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
                         <button type="button" class="btn btn-sm btn-outline-secondary">Распечатать</button>
@@ -308,7 +308,9 @@
                             },
                             width: 33000,//каждый день ЗАДАННЫЙ В ФИЛЬТРЕ  умножить 33 000  2
                             hAxis: {
-
+                                textStyle : {
+                                    fontSize: 10
+                                },
                                 format: '      d.MM.yy H:mm',
                                 timezone: 'UTC + 6',
                                 gridlines: {count: 15}

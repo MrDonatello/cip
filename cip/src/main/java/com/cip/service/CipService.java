@@ -3,6 +3,7 @@ package com.cip.service;
 import com.cip.dao.cip.*;
 import com.cip.dao.user.UserRepository;
 import com.cip.model.cip.*;
+import com.cip.model.dto.Efficiency;
 import com.cip.model.dto.GanttDTO;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,14 @@ public class CipService {
         }
 
         return null;
+    }
+
+    public Map<Integer, String[]> getFilterEfficiency(Efficiency efficiencyDTO) {
+        if (efficiencyDTO.getType().equals("Все")) {
+            return getAllCipLogForDateAndRout(toCalendar(efficiencyDTO.getStartSearch()), toCalendar(efficiencyDTO.getEndSearch()), efficiencyDTO.getObject() + 1);
+        } else {
+            return null;
+        }
     }
 
     private Map<Integer, List<String>> readConfigureFile() {
@@ -113,6 +122,15 @@ public class CipService {
         return parsingAllCip(cipList);
     }
 
+    private Map<Integer, String[]> getAllCipLogForDateAndRout(Calendar start, Calendar end, int rout) {
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Cip> cipList = cip1Repository.findByDateTimeBetweenAndRoute(f.format(start.getTime()), f.format(end.getTime()), rout);
+       /* cipList.addAll(cip2Repository.findByDateTimeBetween(f.format(start.getTime()), f.format(end.getTime())));
+        cipList.addAll(cip3Repository.findByDateTimeBetween(f.format(start.getTime()), f.format(end.getTime())));
+        cipList.addAll(cip4Repository.findByDateTimeBetween(f.format(start.getTime()), f.format(end.getTime())));*/
+        return parsingAllCip(cipList);
+    }
+
     private double getRealTime(String[] dateTimeAllProgramStart, String[] dateTimeEnd) {
         double timeWorkRealHour = (Integer.parseInt(dateTimeEnd[3]) - Integer.parseInt(dateTimeAllProgramStart[3])) * 60;
         double timeWorkRealMinute = Integer.parseInt(dateTimeEnd[4]) - Integer.parseInt(dateTimeAllProgramStart[4]);
@@ -151,7 +169,7 @@ public class CipService {
                         String[] result = checkObjectToReferenceValues(data.get(count - 1)[1], lastObject.getRoute(), getRealTime(dateTimeAllProgramStart, dateTimeEnd));
                         fullObject = new String[]{cipNumber, result[0], result[1],
                                 dateTimeAllProgramStart[0], dateTimeAllProgramStart[1], dateTimeAllProgramStart[2], dateTimeAllProgramStart[3], dateTimeAllProgramStart[4], dateTimeAllProgramStart[5],
-                                dateTimeEnd[0], dateTimeEnd[1], dateTimeEnd[2], dateTimeEnd[3], dateTimeEnd[4], dateTimeEnd[5], cipT, cipK, cipP, data.get(count - 1)[1],getDepartment(lastObject.getRoute())};
+                                dateTimeEnd[0], dateTimeEnd[1], dateTimeEnd[2], dateTimeEnd[3], dateTimeEnd[4], dateTimeEnd[5], cipT, cipK, cipP, data.get(count - 1)[1], getDepartment(lastObject.getRoute())};
                         data.put(count, fullObject);
                         count++;
                         fullObject = new String[]{cipNumber, "", "#ffffff",

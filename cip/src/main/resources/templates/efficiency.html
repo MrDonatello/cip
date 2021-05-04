@@ -8,13 +8,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.5/examples/dashboard/dashboard.css" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">-->
     <link th:href="@{/css/registration.css}" rel="stylesheet">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script
             src="https://code.jquery.com/jquery-2.2.4.js"
             integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
             crossorigin="anonymous"></script>
-    <title>Journal Page</title>
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>-->
+    <title>Gantt Page</title>
 </head>
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -51,6 +54,17 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/journal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-file">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                <polyline points="13 2 13 9 20 9"></polyline>
+                            </svg>
+                            Журнал мойки
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/gantt">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -74,12 +88,6 @@
                             Эффективность работы контура
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/efficiency">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Эффективность мойки объекта
-                        </a>
-                    </li>
                 </ul>
 
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -91,41 +99,29 @@
                         <li class="nav-form">
                             <label for="start-datetime-local-input">Начало периода</label>
                             <div class="col-10">
-                                <input class="form-control" type="datetime-local" value="2021-04-11T00:00:00"
+                                <input class="form-control" type="datetime-local" value="2021-05-04T00:00:00"
                                        name="startSearch" id="start-datetime-local-input">
                             </div>
                         </li>
                         <li class="nav-form">
                             <label for="end-datetime-local-input">Окончание периода</label>
                             <div class="col-10">
-                                <input class="form-control" type="datetime-local" value="2021-04-12T00:00:00"
+                                <input class="form-control" type="datetime-local" value="2021-05-05T00:00:00"
                                        name="endSearch" id="end-datetime-local-input">
                             </div>
                         </li>
                         <li class="nav-form">
-                            <label for="washType">Фильтр по отделам</label>
+                            <label for="washType">Фильтр по типу мойки</label>
                             <select name="type" class="form-control" id="washType">
                                 <option>Все</option>
-                                <option>Пастеризационное отделение</option>
-                                <option>Заготовительное отделение</option>
-                                <option>Участок хранения молока</option>
-                                <option>Участок приемки молока</option>
-                            </select>
-                        </li>
-                        <li class="nav-form">
-                            <label for="routType">Фильтр по контурам</label>
-                            <select name="cip" class="form-control" id="routType">
-                                <option>Все</option>
-                                <option>СИП 1</option>
-                                <option>СИП 2</option>
-                                <option>СИП 3</option>
-                                <option>СИП 4</option>
+                                <option>Мойка щелочью</option>
+                                <option>Мойка кислотой</option>
+                                <option>Стерилизация</option>
                             </select>
                         </li>
                         <li class="nav-form">
                             <label for="objectType">Фильтр по объектам</label>
                             <select name="object" class="form-control" id="objectType">
-                                <option>Все</option>
                                 <option>Танк 31</option>
                                 <option>Танк 32</option>
                                 <option>Танк 33</option>
@@ -230,9 +226,8 @@
 
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Отчет по мойке</h1>
+                <h1 class="h2">Диаграмма эффективности мойки объекта</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
                         <button type="button" class="btn btn-sm btn-outline-secondary">Распечатать</button>
@@ -253,98 +248,111 @@
             </div>
 
 
-            <div class="tl" id="table_div" style="height: auto; text-align: center;">
-
-                <script th:inline="javascript">
-
-                    google.charts.load('current', {'packages': ['table']});
-                    google.charts.setOnLoadCallback(drawTable);
-
-                    var dataTable;
-
-                    function drawTable() {
-                        dataTable = new google.visualization.DataTable();
-                        let htmlData = [[${data}]];
-
-                        dataTable.addColumn('string', 'Контур');
-                        dataTable.addColumn('string', 'Отдел');
-                        dataTable.addColumn('string', 'Объект');
-                        dataTable.addColumn('string', 'Программа');
-                        dataTable.addColumn('string', 'Начало');
-                        dataTable.addColumn('string', 'Окончание');
-                        dataTable.addColumn('string', 'Ошибки');
-
-                        var el;
-                        for (let subArr of Object.keys(htmlData)) {
-                            el = htmlData[subArr];
-                            console.log(el);
-                            if (el.length > 18) {
-                                if (el[18] === "Вытеснение кислоты") {
-                                    el[18] = "Мойка кислоттой";
-                                } else if (el[18] === "Вытеснение щелочи") {
-                                    el[18] = "Мойка щелочью";
-                                }
-
-                                  if (el[2] === "#FF0000") {
-                                      el[2] = '+';
-                                  } else if (el[2] === "#FFFF00") {
-                                      el[2] = '+';
-                                  } else if (el[2] === "#049a00") {
-                                      el[2] = '';
-                                  }
-
-                                dataTable.addRows([[el[0], el[19], el[1], el[18],
-                                    el[3] + '-' + el[4] + '-' + el[5] + ' ' + el[6] + ':' + el[7] + ':' + el[8], el[9] + '-' + el[10] + '-' + el[11] + ' ' + el[12] + ':' + el[13] + ':' + el[14]/* el[9] + '-' + el[10] + '-' + el[11] + ' ' + el[12] + ':' + el[13] + ':' + el[14]*/, el[2]
-                                ]]);
-                            }
-                        }
-
-                        var options = {
-                            showRowNumber: false,
-                            page: 'enable',
-                            pageSize: 30,
-                            width: '100%',
-                            pagingSymbols: {
-                                prev: 'prev',
-                                next: 'next'
-                            },
-                            pagingButtonsConfiguration: 'auto'
-                        };
-
-                        var table = new google.visualization.Table(document.getElementById('table_div'));
-                        table.draw(dataTable, options);
-                    }
-                </script>
+            <div class="tl" id="efficiency" style="height: 100%; ">
             </div>
+
+
         </main>
     </div>
 </div>
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('form').submit(function () {
             var json = {
-                "object": $('#objectType').val(),
-                "cip": $('#routType').val(),
+                "object": $('#objectType').prop('selectedIndex'),
                 "type": $('#washType').val(),
                 "startSearch": $('#start-datetime-local-input').val(),
                 "endSearch": $('#end-datetime-local-input').val(),
             };
-            console.log(json);
+            //console.log(json);
             $.ajax({
                 type: 'POST',
                 contentType: "application/json",
-                url: "/journal",
+                url: "/efficiency",
                 data: JSON.stringify(json),
                 dataType: 'json',
                 cache: false,
                 timeout: 600000,
                 success: function (data) {
-                    //google table
+                    // Вывод текста результата отправки в текущей форме
+                    console.log(data);
+                    google.charts.load('current', {'packages': ['corechart']});
+                    google.charts.setOnLoadCallback(drawVisualization);
+
+                    function drawVisualization() {
+                        let htmlData = data;
+                        var b = 'Стерилизация';
+                        // b = 'Заполнение щелочи';
+                        var c = 'Последнее опаласкивание';
+                        //c= 'Мойка';
+                        var d = null;
+                        d = 'Вытеснение';
+
+                        var r = [
+                            ['Дата', 'Ополаскивание', b, c, d, c, 'Average'],
+                            [null, null, null, null, null, null, 100],
+                        ];
+
+                        var el;
+
+                       /* for (let subArr of Object.keys(htmlData)) {
+                            el = htmlData[subArr];
+                            r.push(['20.04.21(20:00-20:35)', 105, 91, 103, 102, 110, 100])
+                        }*/
+                            //for screenShot :)
+                        r.push(['20.04.21(20:00-20:35)', 105, 91, 103, null, null, 100]);
+                        r.push(['20.04.21(20:00-20:35)', 105, 91, 103, 102, 110, 100]);
+                        r.push(['20.04.21(20:00-20:35)', 105, 91, 103, 102, 110, 100]);
+                        r.push(['20.04.21(20:00-20:35)', 105, 91, 103, null, null, null]);
+                        r.push(['20.04.21(20:00-20:35)', 105, 91, 103, 102, 110, 100]);
+
+
+                        r.push([null, null, null, null, null, null, 100]);
+                        var data2 = google.visualization.arrayToDataTable(r);
+
+                        var options = {
+                            width: 2000,
+                            height: 700,
+                            interpolateNulls: true,
+
+                            title: 'Эффективность мойки обекта Х',
+                            vAxis: {title: 'Длительность шага относительно заданной в %'},
+                            hAxis: {
+                                title: ' Дата', textStyle: {
+                                    fontSize: 10
+                                }, viewWindow: {
+                                    min: 0.9
+                                }
+                            },
+
+                            seriesType: 'bars',
+                            series: {
+                                5: {color: 'red', type: 'line', lineDashStyle: [10, 2]}
+                            },
+
+                            annotations: {
+                                style: 'line',
+                                textStyle: {
+                                    fontName: 'Times-Roman',
+                                    fontSize: 10,
+                                    bold: true,
+                                    italic: true,
+                                    opacity: 0.8
+                                }
+                            }
+                        };
+                        var chart = new google.visualization.ComboChart(document.getElementById('efficiency'));
+                        chart.draw(data2, options);
+                    }
                 }
             });
             return false;
         });
     });
 </script>
+
+
 </body>
 </html>
