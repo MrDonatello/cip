@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -193,6 +194,18 @@ public class MainController {
     public @ResponseBody
     Map<Integer, String[]> getDiagram(@RequestBody Efficiency efficiencyDTO) {
         Map <Integer, String []> s = cipService.getFilterEfficiency(efficiencyDTO);
+        return s;
+    }
+
+    @GetMapping("/efficiency_circuit")
+    public String showEfficiencyCircuit() {
+        return "efficiency_circuit";
+    }
+
+    @PostMapping("/efficiency_circuit") // filter
+    public @ResponseBody
+    Map<Integer, String[]> getEfficiencyCircuit() {
+        Map <Integer, String []> s = new HashMap<>();
         return s;
     }
 }

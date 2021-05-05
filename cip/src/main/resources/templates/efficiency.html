@@ -27,7 +27,7 @@
             data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Поиск" aria-label="Search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <form class="nav-link" th:action="@{/logout}" method="post">
@@ -77,7 +77,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/efficiency_circuit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                  stroke-linejoin="round" class="feather feather-bar-chart-2">
@@ -291,41 +291,50 @@
                         d = 'Вытеснение';
 
                         var r = [
-                            ['Дата', 'Ополаскивание', b, c, d, c, 'Average'],
-                            [null, null, null, null, null, null, 100],
+                            ['Дата', 'Ополаскивание', {type: 'string', role: 'annotation'}, b, {
+                                type: 'string',
+                                role: 'annotation'
+                            }, c, {type: 'string', role: 'annotation'}, d, {
+                                type: 'string',
+                                role: 'annotation'
+                            }, c, {type: 'string', role: 'annotation'}, 'Average'],
+                            [null, null, null, 90, null, null, null, null, null, null, null, 100],
                         ];
 
                         var el;
 
-                       /* for (let subArr of Object.keys(htmlData)) {
-                            el = htmlData[subArr];
-                            r.push(['20.04.21(20:00-20:35)', 105, 91, 103, 102, 110, 100])
-                        }*/
-                            //for screenShot :)
-                        r.push(['20.04.21(20:00-20:35)', 105, 91, 103, null, null, 100]);
-                        r.push(['20.04.21(20:00-20:35)', 105, 91, 103, 102, 110, 100]);
-                        r.push(['20.04.21(20:00-20:35)', 105, 91, 103, 102, 110, 100]);
-                        r.push(['20.04.21(20:00-20:35)', 105, 91, 103, null, null, null]);
-                        r.push(['20.04.21(20:00-20:35)', 105, 91, 103, 102, 110, 100]);
+                        /* for (let subArr of Object.keys(htmlData)) {
+                             el = htmlData[subArr];
+                             r.push(['20.04.21(20:00-20:35)', 105, 91, 103, 102, 110, 100])
+                         }*/
+                        //for screenShot :)
+
+                        r.push(['04.05.21(20:02-20:35)', 105, 'Ополаскивание', 101, 'Заполнение щелочью', 103, 'Мойка щелочью', 102, 'Вытеснение щелочи', 107, 'Последнее опаласкивание', 100]);
+                        r.push(['04.05.21(22:35-22:55)', 105, 'Ополаскивание', 101, 'Стерилизация', 103, 'Последнее опаласкивание', null, null, null, null, 100]);
+                        r.push(['05.05.21(8:08-8:27)', 105, 'Ополаскивание', 101, 'Заполнение кислотой', 95, 'Мойка кислотой', 100, 'Вытеснение кислоты', 102, 'Последнее опаласкивание', 100]);
+                        r.push(['05.05.21(13:00-13:35)', 105, 'Ополаскивание', 101, 'Стерилизация', 103, 'Последнее опаласкивание', null, null, null, null, 100]);
+                        r.push(['05.05.21(15:00-15:28)', 105, 'Ополаскивание', 101, 'Стерилизация', 103, 'Последнее опаласкивание', null, null, null, null, 100]);
 
 
-                        r.push([null, null, null, null, null, null, 100]);
+                        r.push([null, null, null, null, null, null, null, null, null, null, null, 100]);
                         var data2 = google.visualization.arrayToDataTable(r);
 
                         var options = {
-                            width: 2000,
+                            width: 2500,
                             height: 700,
                             interpolateNulls: true,
 
-                            title: 'Эффективность мойки обекта Х',
+                            legend: {position: 'none'},
+                            title: 'Эффективность мойки обекта Танк 32',
                             vAxis: {title: 'Длительность шага относительно заданной в %'},
                             hAxis: {
                                 title: ' Дата', textStyle: {
                                     fontSize: 10
                                 }, viewWindow: {
-                                    min: 0.9
+                                    min: 0.8
                                 }
                             },
+                            //bar: {groupWidth: "85%"},
 
                             seriesType: 'bars',
                             series: {
@@ -333,14 +342,18 @@
                             },
 
                             annotations: {
-                                style: 'line',
+                                //style: 'line',
                                 textStyle: {
                                     fontName: 'Times-Roman',
                                     fontSize: 10,
                                     bold: true,
                                     italic: true,
+                                    color: 'black',
+                                    // The color of the text outline.
+                                    //auraColor: '#d799ae',
                                     opacity: 0.8
-                                }
+                                },
+                                alwaysOutside: true
                             }
                         };
                         var chart = new google.visualization.ComboChart(document.getElementById('efficiency'));

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://getbootstrap.com/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.5/examples/dashboard/dashboard.css" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">-->
+    <link th:href="@{/css/registration.css}" rel="stylesheet">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.js"
+            integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+            crossorigin="anonymous"></script>
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>-->
+    <title>Gantt Page</title>
+</head>
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" th:inline="text">Здравствуйте
+        [[${#httpServletRequest.remoteUser}]]</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Поиск" aria-label="Search">
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <form class="nav-link" th:action="@{/logout}" method="post">
+                <input type="submit" value="Выход"/>
+            </form>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="sidebar-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/engineer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                <path fill-rule="evenodd"
+                                      d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"></path>
+                            </svg>
+                            Назад <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/journal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-file">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                <polyline points="13 2 13 9 20 9"></polyline>
+                            </svg>
+                            Журнал мойки
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/gantt">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-layers">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                            Диаграмма мойки оборудования
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/efficiency">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            Эффективность мойки объекта
+                        </a>
+                    </li>
+                </ul>
+
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Фильтр поиска</span>
+                </h6>
+
+                <form class="form-signin" name="s" id="search">
+                    <div>
+                        <li class="nav-form">
+                            <label for="start-datetime-local-input">Начало периода</label>
+                            <div class="col-10">
+                                <input class="form-control" type="datetime-local" value="2021-05-04T00:00:00"
+                                       name="startSearch" id="start-datetime-local-input">
+                            </div>
+                        </li>
+                        <li class="nav-form">
+                            <label for="end-datetime-local-input">Окончание периода</label>
+                            <div class="col-10">
+                                <input class="form-control" type="datetime-local" value="2021-05-05T00:00:00"
+                                       name="endSearch" id="end-datetime-local-input">
+                            </div>
+                        </li>
+                        <li class="nav-form">
+                            <label for="routType">Фильтр по контурам</label>
+                            <select name="cip" class="form-control" id="routType">
+                                <option>Все</option>
+                                <option>СИП 1</option>
+                                <option>СИП 2</option>
+                                <option>СИП 3</option>
+                                <option>СИП 4</option>
+                            </select>
+                        </li>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In">Поиск</button>
+                </form>
+
+            </div>
+        </nav>
+
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Диаграмма эффективности работы контура</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Распечатать</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Сохранить в pdf</button>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-calendar">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Опции
+                    </button>
+                </div>
+            </div>
+
+
+
+            <div class="tl2" id="efficiency" style="height: 100%; ">
+
+            <table class="columnss">
+                <tr>
+                    <td> <div class="t2" id="donut_single" style="border: 5px solid #ccc; width: 750px; height: 370px"></div></td>
+                    <td><div class="t12" id="donut_single2" style="border: 5px solid #ccc; width: 750px; height: 370px"></div></td>
+
+                </tr>
+                <tr>
+                    <td><div class="t12" id="donut_single3" style="border: 5px solid #ccc; width: 750px; height: 370px"></div></td>
+                    <td><div class="t12" id="donut_single4" style="border: 5px solid #ccc; width: 750px; height: 370px"></div></td>
+                </tr>
+            </table>
+            </div>
+
+
+
+        </main>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('form').submit(function () {
+            var json = {
+                "cip": $('#routType').val(),
+                "startSearch": $('#start-datetime-local-input').val(),
+                "endSearch": $('#end-datetime-local-input').val(),
+            };
+            //console.log(json);
+            $.ajax({
+                type: 'POST',
+                contentType: "application/json",
+                url: "/efficiency_circuit",
+                data: JSON.stringify(json),
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    // Вывод текста результата отправки в текущей форме
+                    console.log(data);
+
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+                    google.charts.setOnLoadCallback(drawChart2);
+                    google.charts.setOnLoadCallback(drawChart3);
+                    google.charts.setOnLoadCallback(drawChart4);
+
+                    function drawChart() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['Effort', 'Amount given'],
+                            ['Мойка',     72.4],
+                            ['Нет мойки',   26.3  ],
+                            ['Паузы',     1.3],
+                        ]);
+
+                        var options = {
+
+                            width: 740,
+                            height: 360,
+                            title: 'Эффективность работы контура',
+
+                            pieHole: 0.5,
+                            pieSliceTextStyle: {
+                                color: 'black',
+                            },
+                            legend: 'labeled'
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('donut_single'));
+                        chart.draw(data, options);
+                    }
+
+
+                    google.charts.setOnLoadCallback(drawChart2);
+
+                    function drawChart2() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['Effort', 'Amount given'],
+                            ['Мойка успешно завершена',     97.6],
+                            ['Отклонение времени мойки',     2.4],
+                        ]);
+
+                        var options = {
+
+                            width: 740,
+                            height: 360,
+                            title: 'Отклонение заданного времени моек',
+
+                            pieHole: 0.5,
+                            pieSliceTextStyle: {
+                                color: 'black',
+                            },
+                            legend: 'labeled'
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('donut_single2'));
+                        chart.draw(data, options);
+                    }
+
+
+                    function drawChart3() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['Effort', 'Amount given'],
+                            ['Мойка щелочью',     28.5],
+                            ['Мойка кислотой',     17.4],
+                            ['Стерилизация',     20.9],
+                            ['Ополаскивание',     11.6],
+                            ['Последнее ополаскивание',    9.1 ],
+                            ['Заполнение щелочью',     4.2],
+                            ['Заполнение кислотой',     3.4],
+                            ['Витеснение щелочи',     2.5],
+                            ['Витеснение кислоты',     2.4],
+                        ]);
+
+                        var options = {
+
+                            width: 740,
+                            height: 360,
+                            title: 'Распределение времени мойки по шагам',
+
+                            pieHole: 0.5,
+                            pieSliceTextStyle: {
+                                color: 'black',
+                            },
+                            legend: 'labeled'
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('donut_single3'));
+                        chart.draw(data, options);
+                    }
+                    function drawChart4() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['Effort', 'Amount given'],
+                            ['Подготовка растворов',     91.7],
+                            ['Простой',     8.3],
+                        ]);
+
+                        var options = {
+
+                            width: 740,
+                            height: 360,
+                            title: 'Занятость контура при отсутствии моек оборудования',
+
+                            pieHole: 0.5,
+                            pieSliceTextStyle: {
+                                color: 'black',
+                            },
+                            legend: 'labeled'
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('donut_single4'));
+                        chart.draw(data, options);
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+
+</body>
+</html>
