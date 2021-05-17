@@ -77,6 +77,24 @@ public class CipService {
         return map;
     }
 
+    private Map<Integer, String[]> readConfigureFileString() {
+        Map<Integer, String[]> map = new HashMap<>();
+        List<String> list = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(CipService.class.getResource("/static/docs/config.txt").toURI().getPath()))))) {
+            String line;
+            int i = 0;
+            while ((line = br.readLine()) != null) {
+                list.addAll(Arrays.asList(line.split(" ")));
+                map.put(i,  list.toArray(new String[0]));
+                list.clear();
+                i++;
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
     public Map<Integer, String[]> getPropertyElement(GanttDTO ganttDTO) {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String[] st = ganttDTO.getStart().split("[,\\s\\-:.T]");
@@ -284,6 +302,12 @@ public class CipService {
         Calendar dayAgo = Calendar.getInstance();
         dayAgo.add(Calendar.DAY_OF_MONTH, -2);
         return getAllCipLogForDate(dayAgo, Calendar.getInstance());
+    }
+
+    public Map<Integer,String[]> getRef() {
+        Map <Integer, String[]> map = readConfigureFileString();
+                map.forEach((k,v) -> map.get(k)[0] = v[0].replaceAll("_", " "));
+        return map;
     }
 
     public Long TestDataBaseCip(Long id, int program, int cipNumber, int route, int month, int day, int hour, int minute, int second) { // to check  database test only, delete later
