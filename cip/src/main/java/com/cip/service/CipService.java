@@ -322,8 +322,8 @@ public class CipService {
                         for (long i = 0; i < 120; i++) { // ополаскивание
                             Calendar calendar = new GregorianCalendar(2021, month, day, hour, minute, second + j);
                             Cip1 cip1 = new Cip1(i + id, f.format(calendar.getTime()), route, true, true,
-                                    1, 1, true,
-                                    1, 1, 1,
+                                    1, 45, true,
+                                    1, 1, 45,
                                     false, false, false,
                                     false, true,
                                     false, true, false, false, false);
@@ -334,8 +334,8 @@ public class CipService {
                         for (long i = 0; i < 60; i++) { // мойка наполнение щелочи 1мин
                             Calendar calendar = new GregorianCalendar(2021, month, day, hour, minute, second + j);
                             Cip1 cip1 = new Cip1(i + id, f.format(calendar.getTime()), route, true,
-                                    true, 1, 1, true,
-                                    1, 1, 1,
+                                    true, 1, 75, true,
+                                    1, 55, 72,
                                     false, false, false,
                                     false, true,
                                     false, false, false, true, false);
@@ -347,7 +347,7 @@ public class CipService {
                             Calendar calendar = new GregorianCalendar(2021, month, day, hour, minute, second + j);
                             Cip1 cip1 = new Cip1(i + id, f.format(calendar.getTime()), route, true,
                                     true, 1, 1, true,
-                                    1, 1, 1,
+                                    1, 55, 75,
                                     true, false, false,
                                     false, false,
                                     false, false, false, true, false);
@@ -700,8 +700,8 @@ public class CipService {
                         for (long i = 0; i < 120; i++) { // ополаскивание
                             Calendar calendar = new GregorianCalendar(2021, month, day, hour, minute, second + j2);
                             Cip3 cip3 = new Cip3(i + id, f3.format(calendar.getTime()), route, true, true,
-                                    1, 1, true,
-                                    1, 1, 1,
+                                    1, 45, true,
+                                    200, 1, 45,
                                     false, false, false,
                                     false, true,
                                     false, true, false, false, false);
@@ -712,8 +712,8 @@ public class CipService {
                         for (long i = 0; i < 60; i++) { // мойка наполнение щелочи 1мин
                             Calendar calendar = new GregorianCalendar(2021, month, day, hour, minute, second + j2);
                             Cip3 cip3 = new Cip3(i + id, f3.format(calendar.getTime()), route, true, true,
-                                    1, 1, true,
-                                    1, 1, 1,
+                                    1, 72, true,
+                                    280, 51, 72,
                                     false, false, false,
                                     false, true,
                                     false, false, false, true, false);
@@ -724,8 +724,8 @@ public class CipService {
                         for (long i = 0; i < 240; i++) { // мойка циркуляция  щелочи
                             Calendar calendar = new GregorianCalendar(2021, month, day, hour, minute, second + j2);
                             Cip3 cip3 = new Cip3(i + id, f3.format(calendar.getTime()), route, true, true,
-                                    1, 1, true,
-                                    1, 1, 1,
+                                    1, 78, true,
+                                    280, 57, 78,
                                     true, false, false,
                                     false, false,
                                     false, false, false, true, false);
@@ -736,8 +736,8 @@ public class CipService {
                         for (long i = 0; i < 120; i++) { // вытеснение щелочи
                             Calendar calendar = new GregorianCalendar(2021, month, day, hour, minute, second + j2);
                             Cip3 cip3 = new Cip3(i + id, f3.format(calendar.getTime()), route, true, true,
-                                    1, 1, true,
-                                    1, 1, 1,
+                                    1, 45, true,
+                                    250, 50, 45,
                                     true, false, false,
                                     false, false,
                                     true, false, false, false, false);
@@ -748,8 +748,8 @@ public class CipService {
                         for (long i = 0; i < 180; i++) { // ополаскивание
                             Calendar calendar = new GregorianCalendar(2021, month, day, hour, minute, second + j2);
                             Cip3 cip3 = new Cip3(i + id, f3.format(calendar.getTime()), route, true,
-                                    true, 1, 1, true,
-                                    1, 1, 1,
+                                    true, 45, 1, true,
+                                    280, 1, 45,
                                     false, false, true,
                                     false, false,
                                     true, false, false, false, false);

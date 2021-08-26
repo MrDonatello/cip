@@ -55,6 +55,9 @@ public class MainController {
         } else {
             return "operator";
         }
+
+
+
     }
 
     /*@PostMapping("/")
@@ -89,73 +92,73 @@ public class MainController {
     public String showGanttDiagram(Model model) {
         Map<Integer, String[]> data;
 
-       /* long id = 1;
-        id = cipService.TestDataBaseCip(id, 1, 1, 1, 4, 17, 0, 0, 1);
-        id = cipService.TestDataBaseCip(id, 2, 1, 7, 4 ,17, 1, 2, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 1, 11, 4 ,17, 2, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 1, 16, 4 ,17, 2, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 1, 20, 4, 17, 3, 7, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 1, 5, 4, 17, 3, 52, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 1, 6, 4, 17, 4, 2, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 1, 2, 4, 17, 4, 52, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 1, 3, 4, 17,5, 4, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 1, 4, 4, 17, 5, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 1, 8, 4, 17, 6, 8, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 1, 9, 4, 17, 6, 52, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 1, 10, 4, 17, 7, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 1, 12, 4, 17, 7, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 1, 13, 4, 17, 8, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 1, 14, 4, 17, 8, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 1, 15, 4, 17, 9, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 1, 10, 4, 17, 9, 55, (int) (1 + id));
+     /*   long id = 1;
+        id = cipService.TestDataBaseCip(id, 1, 1, 1, 5, 2, 0, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 1, 7, 5 ,2, 1, 2, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 1, 11, 5 ,2, 2, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 1, 16, 5 ,2, 2, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 1, 20, 5, 2, 3, 7, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 1, 5, 5, 2, 3, 52, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 1, 6, 5, 2, 4, 2, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 1, 2, 5, 2, 4, 52, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 1, 3, 5, 2,5, 4, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 1, 4, 5, 2, 5, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 1, 8, 5, 2, 6, 8, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 1, 9, 5, 2, 6, 52, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 1, 10, 5, 2, 7, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 1, 12, 5, 2, 7, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 1, 13, 5, 2, 8, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 1, 14, 5, 2, 8, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 1, 15, 5, 2, 9, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 1, 10, 5, 2, 9, 55, (int) (1 + id));
         id = 1;
-        id = cipService.TestDataBaseCip(id, 3, 2, 25, 4, 17, 0, 0, 1);
-        id = cipService.TestDataBaseCip(id, 2, 2, 35, 4, 17, 1, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 2, 41, 4, 17, 2, 15, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 2, 40, 4, 17, 2, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 2, 40, 4, 17, 3, 15, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 2, 38, 4, 17, 3, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 2, 37, 4, 17, 4, 15, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 2, 32, 4, 17, 4, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 2, 31, 4, 17, 5, 15, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 2, 30, 4, 17, 5, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 2, 24, 4, 17, 6, 15, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 2, 26, 4, 17, 6, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 2, 27, 4, 17, 7, 15, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 2, 28, 4, 17, 7, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 2, 29, 4, 17, 8, 15, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 2, 25, 5, 2, 0, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 2, 35, 5, 2, 1, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 2, 41, 5, 2, 2, 15, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 2, 40, 5, 2, 2, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 2, 40, 5, 2, 3, 15, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 2, 38, 5, 2, 3, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 2, 37, 5, 2, 4, 15, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 2, 32, 5, 2, 4, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 2, 31, 5, 2, 5, 15, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 2, 30, 5, 2, 5, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 2, 24, 5, 2, 6, 15, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 2, 26, 5, 2, 6, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 2, 27, 5, 2, 7, 15, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 2, 28, 5, 2, 7, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 2, 29, 5, 2, 8, 15, (int) (1 + id));
         id = 1;
-        id = cipService.TestDataBaseCip(id, 1, 3, 45, 4, 17, 0, 0, 1);
-        id = cipService.TestDataBaseCip(id, 2, 3, 51, 4, 17, 2, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 3, 43, 4, 17, 2, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 3, 44, 4, 17, 3, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 3, 46, 4, 17, 3, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 3, 47, 4, 17, 4, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 3, 48, 4, 17, 4, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 3, 49, 4, 17, 5, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 3, 50, 4, 17, 5, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 3, 52, 4, 17, 6, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 3, 53, 4, 17, 6, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 3, 54, 4, 17, 7, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 3, 57, 4, 17, 8, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 3, 58, 4, 17, 8, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 3, 59, 4, 17, 9, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 3, 61, 4, 17, 9, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 3, 45, 5, 2, 0, 0, 1);
+        id = cipService.TestDataBaseCip(id, 2, 3, 51, 5, 2, 2, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 3, 43, 5, 2, 2, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 3, 44, 5, 2, 3, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 3, 46, 5, 2, 3, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 3, 47, 5, 2, 4, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 3, 48, 5, 2, 4, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 3, 49, 5, 2, 5, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 3, 50, 5, 2, 5, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 3, 52, 5, 2, 6, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 3, 53, 5, 2, 6, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 3, 54, 5, 2, 7, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 3, 57, 5, 2, 8, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 3, 58, 5, 2, 8, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 3, 59, 5, 2, 9, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 3, 61, 5, 2, 9, 55, (int) (1 + id));
         id = 1;
-        id = cipService.TestDataBaseCip(id, 2, 4, 67, 4, 17, 0, 0, 1);
-        id = cipService.TestDataBaseCip(id, 3, 4, 91, 4, 17, 1, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 4, 92, 4, 17, 2, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 4, 88, 4, 17, 2, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 4, 89, 4, 17, 3, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 4, 77, 4, 17, 3, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 4, 75, 4, 17, 4, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 4, 73, 4, 17, 4, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 4, 88, 4, 17, 5, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 4, 87, 4, 17, 5, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 4, 89, 4, 17, 6, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 1, 4, 82, 4, 17, 6, 55, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 2, 4, 80, 4, 17, 7, 5, (int) (1 + id));
-        id = cipService.TestDataBaseCip(id, 3, 4, 85, 4, 17, 7, 55, (int) (1 + id));*/
+        id = cipService.TestDataBaseCip(id, 2, 4, 67, 5, 2, 0, 0, 1);
+        id = cipService.TestDataBaseCip(id, 3, 4, 91, 5, 2, 1, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 4, 92, 5, 2, 2, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 4, 88, 5, 2, 2, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 4, 89, 5, 2, 3, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 4, 77, 5, 2, 3, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 4, 75, 5, 2, 4, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 4, 73, 5, 2, 4, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 4, 88, 5, 2, 5, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 4, 87, 5, 2, 5, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 4, 89, 5, 2, 6, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 1, 4, 82, 5, 2, 6, 55, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 2, 4, 80, 5, 2, 7, 5, (int) (1 + id));
+        id = cipService.TestDataBaseCip(id, 3, 4, 85, 5, 2, 7, 55, (int) (1 + id));*/
         data = cipService.getAllCipLogOneDay();
         model.addAttribute("data", data);
         return "gantt";

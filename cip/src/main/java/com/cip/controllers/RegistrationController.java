@@ -27,6 +27,17 @@ public class RegistrationController {
         return "registration";
     }
 
+    @GetMapping("/del")
+    public String del() {
+        return "del";
+    }
+
+    @PostMapping("/del")
+    public String del( Map<String, Object> model) {
+            model.put("message", "User is not found");
+            return "del";
+    }
+
     @PostMapping("/registration")
     public String registration(User user, Map<String, Object> model, @RequestParam String roleForSet) {
         if (userService.addUser(user, roleForSet)) {
